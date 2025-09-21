@@ -11,18 +11,18 @@ The contents are as follows:
 - [🏛️ Architecture Summary](#️-architecture-summary)
   - [Kubernetes High-Level Architecture](#kubernetes-high-level-architecture)
   - [Kubernetes Cluster Architecture](#kubernetes-cluster-architecture)
-- [✈️ 4. Kubernetes Control Plane / Data Plane Overview](#️-4-kubernetes-control-plane--data-plane-overview)
+- [✈️ Kubernetes Control Plane / Data Plane Overview](#️-kubernetes-control-plane--data-plane-overview)
   - [Control Plane](#control-plane)
   - [Data Plane](#data-plane)
   - [Control Plane / Data Plane Key Differences](#control-plane--data-plane-key-differences)
   - [Interactions Between Components](#interactions-between-components)
-- [🧱 5. Kubernetes Objects](#-5-kubernetes-objects)
+- [🧱 Kubernetes Objects](#-kubernetes-objects)
   - [Kubernetes Object vs Kubernetes Resource](#kubernetes-object-vs-kubernetes-resource)
   - [Key Kubernetes Resources](#key-kubernetes-resources)
   - [Key Characteristics](#key-characteristics)
   - [How Kubernetes Objects Work](#how-kubernetes-objects-work)
   - [Where Do Kubernetes Objects Fit in the Architecture?](#where-do-kubernetes-objects-fit-in-the-architecture)
-- [모 6. Kubernetes Networking](#모-6-kubernetes-networking)
+- [모 Kubernetes Networking](#모-kubernetes-networking)
   - [Kubernetes Network Model](#kubernetes-network-model)
     - [1. Container-to-Container Networking](#1-container-to-container-networking)
     - [2. Pod-to-Pod Networking (same Node)](#2-pod-to-pod-networking-same-node)
@@ -264,7 +264,7 @@ A **_"plane"_** is like a layer or domain that provides a separation of concerns
 
 ---
 
-## ✈️ 4. Kubernetes Control Plane / Data Plane Overview
+## ✈️ Kubernetes Control Plane / Data Plane Overview
 
 There are 2 fundamental domains that comprise the Kubernetes cluster architecture, namely the _Control Plane_ and the _Data Plane_. The following section provides a high-level overview of these domains.
 
@@ -435,7 +435,7 @@ sequenceDiagram
 
 ---
 
-## 🧱 5. Kubernetes Objects
+## 🧱 Kubernetes Objects
 
 <br />
 > [!NOTE]
@@ -651,7 +651,7 @@ Kubernetes objects act as the interface between users and the Kubernetes system,
 
 ---
 
-## 모 6. Kubernetes Networking
+## 모 Kubernetes Networking
 
 Kubernetes networking is a foundational aspect of its architecture. At a high level, Kubernetes networking abstracts away the underlying connectivity complexity, and is designed to enable seamless communication between Pods, Services, and external systems. It creates a flat, routable network where every Pod gets its own unique IP address. It also allows direct communication without the need for port mapping or NAT (Network Address Translation). This model simplifies communication by allowing Pods to interact as if they were on the same physical network, regardless of the node they're on.
 
