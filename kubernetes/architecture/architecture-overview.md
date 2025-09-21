@@ -438,6 +438,7 @@ sequenceDiagram
 ## 🧱 Kubernetes Objects
 
 <br />
+
 > [!NOTE]
 > 
 > 📄 According to the [official Kubernetes documentation (Understanding Kubernetes Objects)](https://kubernetes.io/docs/concepts/overview/working-with-objects/#kubernetes-objects):  
