@@ -1,13 +1,19 @@
+![](https://github.com/user-attachments/assets/6645ae00-bb94-4c8f-b2d7-8c97df0cd8e7)
+
 # Tech Notes README
 
 This project represents a personal knowledge base for documenting my learning journey with various technologies.
-
-The primary reason for creating this project is to have a consolidated view of my learnings with various types of tehnologies. One can think of this project as a blog of sorts.
 
 ---
 
 ## Topics
 
-- [Kubernetes](./kubernetes/README.md)
+- [Kubernetes](./kubernetes)
+
+  A journey into the foundational features, patterns and practices of Kubernetes. Written for Developers, DevOps Engineers, and Architects, this series offers both a thoeretical and practical approach to learning and understanding Kubernetes.
+  
+  - [Architecture](./architecture)
+
+    A comprehensive exploration of Kubernetes' core components, design principles, and operational mechanics.
 
 ---
