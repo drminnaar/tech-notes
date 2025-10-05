@@ -20,11 +20,18 @@ The content is as follows:
 - [🏛️ Architecture Summary](#️-architecture-summary)
   - [Kubernetes High-Level Architecture](#kubernetes-high-level-architecture)
   - [Kubernetes Cluster Architecture](#kubernetes-cluster-architecture)
-- [✈️ Kubernetes Control Plane / Data Plane Overview](#️-kubernetes-control-plane--data-plane-overview)
-  - [Control Plane](#control-plane)
-  - [Data Plane](#data-plane)
-  - [Control Plane / Data Plane Key Differences](#control-plane--data-plane-key-differences)
-  - [Interactions Between Components](#interactions-between-components)
+- [🧠 Kubernetes Control Plane](#-kubernetes-control-plane)
+  - [Overview of Control Plane](#overview-of-control-plane)
+  - [Key Functions of Control Plane](#key-functions-of-control-plane)
+  - [Core Components of Control Plane](#core-components-of-control-plane)
+    - [kube-apiserver](#kube-apiserver)
+    - [etcd](#etcd)
+    - [kube-scheduler](#kube-scheduler)
+    - [kube-controller-manager](#kube-controller-manager)
+    - [cloud-controller-manager (Optional)](#cloud-controller-manager-optional)
+- [💪 Kubernetes Data Plane](#-kubernetes-data-plane)
+- [🧐 Control Plane / Data Plane Key Differences](#-control-plane--data-plane-key-differences)
+- [🤝 Interactions Between Components](#-interactions-between-components)
 - [🧱 Kubernetes Objects](#-kubernetes-objects)
   - [Kubernetes Object vs Kubernetes Resource](#kubernetes-object-vs-kubernetes-resource)
   - [Key Kubernetes Resources](#key-kubernetes-resources)
@@ -279,11 +286,11 @@ A **_"plane"_** is like a layer or domain that provides a separation of concerns
 
 ---
 
-## ✈️ Kubernetes Control Plane / Data Plane Overview
+## 🧠 Kubernetes Control Plane
 
-There are 2 fundamental domains that comprise the Kubernetes cluster architecture, namely the _Control Plane_ and the _Data Plane_. The following section provides a high-level overview of these domains.
+In the section above ([Kubernetes Cluster Architecture](#kubernetes-cluster-architecture)), the Control Plane was introduced as a higher-order architectural concept. This section covers the Control Plane in greater detail by exploring its key functions and core components.
 
-### Control Plane
+### Overview of Control Plane
 
 The Control Plane is the brain of the Kubernetes cluster, and is responsible for managing the cluster's state, orchestrating resources, and ensuring the desired state of applications is maintained. It handles all the decision-making processes and maintains the cluster's configuration and state in a consistent manner. The _Control Plane_ components are typically hosted on _Master Nodes_ but can also run on other nodes in highly available setups.
 
@@ -295,7 +302,21 @@ The Control Plane is the brain of the Kubernetes cluster, and is responsible for
 
 <br />
 
-The core components of the Control Plane include:  
+### Key Functions of Control Plane
+
+Generally speaking, the key functions of the Control Plane are to
+
+- maintain overall cluster state
+- make decisions about scheduling
+- respond to cluster events
+
+<br />
+
+![Key Functions](./images/control-plane-key-functions.png)
+
+<br />
+
+More specifically, the key functions of the Kubernetes Control Plane are directly related to the core components of the Control Plane. The core components of the Control Plane include: 
 
 - 1️⃣ **API Server (kube-apiserver)**: The central hub of the Kubernetes API. It exposes the Kubernetes API over HTTP/HTTPS, validates and processes API requests, and serves as the entry point for all administrative tasks, such as creating or updating resources like Pods, Services, and Deployments. 
 
@@ -315,7 +336,130 @@ The core components of the Control Plane include:
 
 ![Control Plane](./images/control-plane.png)
 
-### Data Plane
+### Core Components of Control Plane
+
+#### kube-apiserver
+
+The `kube-apiserver` is the central interface for all interactions with the Kubernetes cluster. It exposes the Kubernetes REST API, which is used by users (via tools like kubectl), internal components, and external systems to manage resources.
+
+**Function:**
+
+- Validates and processes API requests (e.g., creating Pods, updating Services) to create, update, or delete cluster resources.
+
+- Provides authentication, authorization, and admission control to authenticat and authorizes requests using mechanisms like RBAC (Role-Based Access Control) or OIDC.
+
+- Exposes the Kubernetes API allowing authorised clients (like kubectl, applications, or other components) to manage resources (pods, services, deployments, etc.).
+
+- The only component to directly interact with the cluster's data store (etcd). Thereby behaving as a gateway to etcd, updating the cluster’s state based on API operations.
+
+- Serves as the communication hub between _Control Plane_ components, _Data Plane_ components, and external clients (`kubectl`).
+
+**Key Details:**
+
+- Runs as a stateless service, relying on etcd for persistence.
+
+- In High Availability (HA) setups, multiple API server instances are load-balanced (e.g., via an external load balancer).
+
+- Supports HTTPS for secure communication and extensibility via admission controllers (e.g., for custom validation or mutation of resources).
+
+**Example Interaction**: When a user runs `kubectl apply -f deployment.yaml`, the API server validates the YAML, stores it in etcd, and notifies relevant components like the scheduler.
+
+#### etcd
+
+A distributed key-value store that serves as the cluster’s database, storing all cluster state and configuration data. It is considered the single source of truth for cluster storing data about Nodes, Pods, Configurations and other resources.
+
+**Functions**:
+
+- Stores all Kubernetes objects (e.g., Pods, Services, ConfigMaps) as key-value pairs.
+
+- Uses the Raft consensus algorithm to ensure consistency across replicas in HA setups.
+
+- Provides watch functionality, allowing components like the scheduler and controllers to react to state changes in real-time.
+
+
+**Key Details**:
+
+- Typically deployed as a cluster of 3, 5, or more odd-numbered nodes for fault tolerance.
+
+- Highly sensitive to latency and disk performance, requiring fast SSDs and low-latency networks.
+
+- Backups are critical, as etcd holds the entire cluster state.
+
+**Example Interaction**: When a Pod is created, its definition is stored in etcd, and the scheduler watches etcd to assign it to a node.
+
+#### kube-scheduler
+
+Assigns pods to worker nodes based on resource requirements, constraints, and policies.
+
+**Key Functions**:
+
+- The scheduler's job is to place newly created Pods onto available worker nodes. It does this by watching for unscheduled pods (pods without assigned nodes).
+
+- Uses a two-phase process: **filtering** (identifying suitable nodes) and **scoring** (ranking nodes based on heuristics). Through a scoring mechanism, it determines the best node for running a Pod by evaluating node capacity, resource availability, and constraints (e.g., node affinity, taints/tolerations).
+
+- Considers user-defined policies like resource limits or pod affinity.
+
+**Key Details**:
+
+- Watches the API server for unscheduled Pods (Pods with no .spec.nodeName).
+
+- The scheduler is extensible, allowing custom scheduling logic via scheduler extensions or custom schedulers.
+
+**Example Interaction**: A new Pod is created; the scheduler evaluates all nodes, selects one with sufficient resources, and updates the Pod’s spec in etcd to assign it.
+
+#### kube-controller-manager
+
+Runs controllers that monitor (regulate) the cluster’s state and reconciles (takes corrective actions to align) the current state with the desired state.
+
+**Key Functions:**
+
+- Watches the API server for changes and reconciles the cluster state.
+
+- Manages various controllers, such as:
+  - Node Controller: Monitors node health and handles node failures.
+  - Replication Controller: Ensures the correct number of pod replicas are running.
+  - Deployment Controller: Manages rollout and rollback of application updates.
+  - StatefulSet Controller: Handles stateful applications.
+  - Endpoint Controller: Manages service endpoints. Populates endpoint objects after service creation.
+  - Service Account & Token Controllers: Manage service accounts and secure token management.
+  - Job Controller: The Job controller ensures that a Job (task) completes successfully, creating the Pods required for running the job.
+  - DaemonSet Controller: Ensure specified Pod runs on every node of cluster.
+
+- Controllers operate in a continuous reconciliation loop to maintain the desired state.
+
+**Key Details**:
+
+- Runs multiple controllers in a single process for efficiency, though controllers are logically independent.
+
+- Relies on the API server for state updates and etcd for persistence.
+
+- In High Availability (HA) setups, leader election ensures only one controller-manager is active.
+
+**Example Interaction**: If a ReplicaSet specifies three Pods but only two are running, the controller creates a new Pod to meet the desired count.
+
+#### cloud-controller-manager (Optional)
+
+Integrates Kubernetes with cloud provider APIs for managing cloud-specific resources (e.g., load balancers, storage, or node provisioning).
+
+**Key Functions**:
+
+- Manages cloud-specific operations like provisioning cloud storage or creating load balancers for services.
+
+- Separates cloud-specific logic from the core Kubernetes control plane.
+
+**Key Details**:
+
+- Only relevant in cloud-hosted clusters (e.g., AWS EKS, Google GKE).
+
+- Communicates with cloud provider APIs via cloud-specific plugins.
+
+- Can be disabled in on-premises or bare-metal clusters.
+
+**Example Interaction**: When a Service of type LoadBalancer is created, the cloud-controller-manager provisions an AWS ELB and updates the Service’s status.
+
+---
+
+## 💪 Kubernetes Data Plane
 
 Worker nodes (also called minions) are the machines where application workloads run. Each node hosts Pods (the smallest deployable units in Kubernetes, consisting of one or more containers) and provides the runtime environment.
 
@@ -337,12 +481,16 @@ Key components on each node include:
 
 ![Data Plane](./images/data-plane.png)
 
-### Control Plane / Data Plane Key Differences
+---
+
+## 🧐 Control Plane / Data Plane Key Differences
 
 <br />
 
 > [!TIP]
+> 
 > As an analogy, think of the Kubernetes Cluster as an Airport:
+> 
 > - **Control Plane:** Think of it as the "air traffic control" of the Kubernetes cluster. It monitors, plans, and directs all activities, ensuring everything runs smoothly.  
 >   
 > - **Data Plane:** Think of it as the "runway and planes" where the actual flights (workloads) take off, land, and operate, following instructions from air traffic control.
@@ -362,7 +510,9 @@ Key components on each node include:
 | **Data Handling** | Handles metadata and instructions only. | Processes and transports live, structured, or sensitive data. |
 | **Security Profile** | Lower attack surface due to reduced data exposure. | Higher security risk; requires robust isolation and compliance. | 
 
-### Interactions Between Components
+---
+
+## 🤝 Interactions Between Components
 
 Kubernetes operates as a distributed system where components (control plane and node-level) interact primarily through the `kube-apiserver` (located in control plane) and work in a control loop to continuously monitor and reconcile the cluster's state. The workflow involves creating, updating, and managing Kubernetes objects (e.g., `Pods`, `Deployments`, `Services`) to run workloads, handle networking, and enforce policies. These interactions are asynchronous, event-driven, and rely on the following principles:
 
