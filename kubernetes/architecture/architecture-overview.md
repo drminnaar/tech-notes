@@ -30,8 +30,24 @@ The content is as follows:
     - [kube-controller-manager](#kube-controller-manager)
     - [cloud-controller-manager (Optional)](#cloud-controller-manager-optional)
 - [💪 Kubernetes Data Plane](#-kubernetes-data-plane)
+  - [Overview of Data Plane](#overview-of-data-plane)
+  - [Key Functions of Data Plane](#key-functions-of-data-plane)
+  - [Why understanding the Data Plane matters](#why-understanding-the-data-plane-matters)
+  - [Core Components of Data Plane](#core-components-of-data-plane)
+    - [kubelet](#kubelet)
+    - [kube-proxy](#kube-proxy)
+    - [Container Runtime](#container-runtime)
+    - [Pod](#pod)
+    - [Container](#container)
 - [🧐 Control Plane / Data Plane Key Differences](#-control-plane--data-plane-key-differences)
-- [🤝 Interactions Between Components](#-interactions-between-components)
+- [🤝 Control Plane / Data Plane Interactions](#-control-plane--data-plane-interactions)
+  - [Example 1: Simple Workflow](#example-1-simple-workflow)
+  - [Example 2: Detailed Pod Creation/Termination Workflow](#example-2-detailed-pod-creationtermination-workflow)
+    - [🕓 1 - Scheduling](#-1---scheduling)
+    - [🛠️ 2 - Pod Creation](#️-2---pod-creation)
+    - [🌐 3 - Networking](#-3---networking)
+    - [🔁 4 - Monitoring Loop](#-4---monitoring-loop)
+    - [♻️ 5 - Termination](#️-5---termination)
 - [🧱 Kubernetes Objects](#-kubernetes-objects)
   - [Kubernetes Object vs Kubernetes Resource](#kubernetes-object-vs-kubernetes-resource)
   - [Key Kubernetes Resources](#key-kubernetes-resources)
@@ -461,7 +477,128 @@ Integrates Kubernetes with cloud provider APIs for managing cloud-specific resou
 
 ## 💪 Kubernetes Data Plane
 
-Worker nodes (also called minions) are the machines where application workloads run. Each node hosts Pods (the smallest deployable units in Kubernetes, consisting of one or more containers) and provides the runtime environment.
+In the section above ([Kubernetes Cluster Architecture](#kubernetes-cluster-architecture)), the Data Plane was introduced as a higher-order architectural concept. This section covers the Data Plane in greater detail by exploring its key functions and core components.
+
+### Overview of Data Plane
+
+The Kubernetes Data Plane (also known as the worker plane or node plane) is primarily responsible for running and managing user applications (workloads), and providing Pod networking. It is where the containers actually execute, communicate, and are managed according to the rules set by the control plane. Where the Control Plane makes the decisions, the Data Plane executes the decisions.
+
+It consists of worker nodes (also called minion nodes) where the actual user workloads, such as pods, containers, and applications, are scheduled and run. Unlike the control plane, which manages the cluster's state and orchestration (making decisions), the data plane focuses on runtime operations (executing decisions) like executing containers, handling network traffic between pods, and managing local storage. Furthermore, the data plane is designed for resilience, with each worker node operating independently but under the guidance of the control plane. 
+
+<br />
+
+> [!TIP]
+>
+> In production clusters, **Worker Nodes** are typically commodity hardware or virtual machines, and they do not host control plane components, thereby maintaining separation of concerns. They are responsible for running application workloads.
+
+<br />
+
+### Key Functions of Data Plane
+
+Briefly, the key functions of the Data Plane are as follows:
+
+- Runs the pods and containers that make up your applications.
+- Manages local networking to route traffic to pods and services.
+- Mounts storage volumes (e.g., persistent volumes) for pods as instructed by the control plane.
+- Enforces policies for networking, security, and resource allocation on individual nodes.
+- Reports node and pod status back to the control plane for reconciliation.
+- Scales horizontally by adding more worker nodes to handle increased workloads.
+
+The key functions are further elaborated below along with key components.
+
+**<ins>Container Execution</ins>:**
+
+Key Components: `Kubelet`, `Container Runtime`
+
+Running the actual application containers specified in Pod definitions. This involves pulling container images, starting, stopping, and restarting containers.
+
+**<ins>Networking</ins>:**
+
+Key Compnents: `Kubelet`, `kube-proxy`, `Container Network Interface (CNI)`
+
+Facilitating communication between Pods, to and from external traffic, and implementing the service abstraction for reliable connections.
+
+**<ins>Resource Management</ins>:**
+
+Key Compnents: `Kubelet`, `Container Runtime`
+
+Managing the node's resources (CPU, memory, storage) and allocating them to Pods according to the requests and limits defined in the Pod specification.
+
+**<ins>Health and State Reporting</ins>:**
+
+Key Compnents: `Kubelet`
+
+Regularly reporting the health and current status of the containers, Pods, and the node back to the control plane (specifically the API server).
+
+**<ins>Volume Management</ins>:**
+
+Key Compnents: `Kubelet`, `Container Storage Interface (CSI)`
+
+Mounting and managing the storage volumes (like persistent volumes, config maps, secrets) that are required by the application containers.
+
+### Why understanding the Data Plane matters
+
+<br />
+
+> [!TIP]
+> 
+> **For Software Engineers**, understanding the data plane is essential to help understand how Kubernetes actually runs containers and delivers the high availability, scalability, and reliability.
+>
+> **For DevOps engineers**, the data plane is the operational core, and therefore the part of Kubernetes they’ll interact with most when provisioning infrastructure, troubleshooting workloads, ensuring network connectivity, and securing application environments.
+>
+> **For platform architects**, the data plane represents the foundation upon which scalable, multi-tenant, and resilient systems are built. A deep understanding of the data plane enables architects to design platforms that maximize efficiency, reliability, and operational simplicity.
+
+<br />
+
+The data plane is important because it's where the "real work" happens like running pods, services, and ensuring application availability. It is especially important across the following areas:
+
+⚡ **Performance**
+
+- Pod Scheduling Efficiency: Once the control plane schedules a pod, the data plane (via the kubelet and container runtime) must launch it quickly and reliably.
+
+- Network Throughput: CNI plugins and kube-proxy handle service routing and pod-to-pod communication. Poor configuration or bottlenecks here can negatively impact app responsiveness.
+
+- Resource Utilization: The data plane governs CPU, memory, and disk usage on nodes. Mismanaged resources lead to throttling, evictions, or degraded service.
+
+📈 **Scalability**
+
+- Horizontal Scaling: Adding more nodes or pods stresses the data plane. It must maintain consistent behavior across a growing fleet.
+
+- Service Discovery: As services scale, kube-proxy (or alternatives) must handle increased traffic without latency spikes.
+
+- Resilience Under Load: The data plane must gracefully handle node failures, pod restarts, and traffic surges without cascading failures.
+
+🔐 **Security**
+
+- Runtime Isolation: Container runtimes enforce boundaries between workloads. Weak isolation can lead to container escapes or privilege escalation.
+
+- Network Policies: CNI plugins enforce ingress/egress rules. Without them, there is no restriction in terms of pods communicating with each other.
+
+- Node Hardening: The kubelet and container runtime run with elevated privileges. Securing them is critical to prevent host compromise.
+
+🛠️ **Operational Reliability**
+
+- Self-Healing: The data plane (via kubelet and container runtime) detects failed containers and restarts them automatically. This keeps services resilient without manual intervention.
+
+- Logging & Monitoring: Tools like Fluentd, Prometheus, and Grafana rely on data plane components to collect metrics and logs. Without reliable data plane instrumentation, observability breaks down.
+
+- Storage Management: Persistent volumes and CSI drivers operate in the data plane. Misconfigured storage can lead to data loss or downtime.
+
+🔄 **Policy Enforcement & Governance**
+
+- Pod Security Standards: Enforcing policies like disallowing privileged containers or hostPath volumes happens at the data plane level.
+
+- Quota Enforcement: Resource quotas and limits are enforced by the kubelet, ensuring fair usage and preventing resource hogging.
+
+- Admission Control: While some admission controllers run in the control plane, enforcement of runtime policies (like seccomp or AppArmor) happens in the data plane.
+
+🌍 **Multi-Tenancy & Isolation**
+
+- Namespace Isolation: The data plane ensures that workloads in different namespaces don’t interfere with each other.
+
+- Custom Runtime Support: For specialized workloads (e.g., GPU-based ML jobs), the data plane can be extended with custom runtimes or device plugins.
+
+### Core Components of Data Plane
 
 Key components on each node include:
 
@@ -480,6 +617,190 @@ Key components on each node include:
 <br />
 
 ![Data Plane](./images/data-plane.png)
+
+#### kubelet
+
+A kubelet is an agent that runs on each worker node and ensures containers are running as expected.
+
+> [!TIP]
+>
+> With regards to Kubernetes, the term "agent" refers to a software process (or daemon) that runs continuously on a worker node to perform specific tasks.
+
+**🔑 Key Functions:**
+
+- Registers the node with the cluster.
+
+- Watches the API server (`kube-api-server`) for pods assigned to its node and ensures they are running.
+
+- Communicates with Container Runtime through CRI (Container Runtime Interface) and manages container runtime and pod lifecycle: pulls images, starts/stops containers, and handles restarts.
+
+- Reports node and pod status (e.g., resource usage, health) back to the API server.
+
+- Executes pod-related tasks like volume mounting and secret injection.
+
+- Executes health checks (liveness and readiness probes) to ensure pod health.
+
+**💡 Example:**
+
+Deploy a pod with a spec that says it should run an Nginx container.  
+
+- The control plane schedules Pod to Node A. 
+
+- The kubelet on `Node A` detects assignment and receives instruction, pulls the Nginx image via the container runtime, starts the container, and continuously monitors its health. If the container crashes, the kubelet restarts it automatically.
+
+#### kube-proxy
+
+A network proxy that runs on each node to manage service discovery and load balancing. It manages network connectivity for pods, enabling communication within the cluster and with external services. Note that `kube-proxy` can operate in different modes (e.g., iptables, IPVS) to optimize performance.
+
+**🔑 Key Functions:**
+
+- Maintains network rules (e.g., iptables or IPVS) for Kubernetes services.
+- Handles traffic routing to pods based on service selectors and endpoints.
+- Supports service discovery and load balancing for Kubernetes services.
+- Implements networking modes like ClusterIP, NodePort, or LoadBalancer.
+- Supports modes like userspace, iptables (default), and IPVS for efficient proxying.
+- Enables pod-to-pod, pod-to-service, and external-to-service communication.
+
+**💡 Example:** 
+
+Expose an Nginx pod via a Kubernetes Service:
+
+- A user accesses the service IP.
+- `kube-proxy` intercepts the request and routes it to one of the Nginx pod instances, using round-robin or other load-balancing logic. It ensures seamless service discovery and traffic routing across pods.
+
+Therefore, when a service is created, `kube-proxy` configures networking rules to route traffic to the correct pods.
+
+#### Container Runtime
+
+The container runtime is the software responsible for running containers on the node, interfacing with the node's kernel via the container runtime Interface (CRI). The container runtime must implement the container runtime Interface (CRI) to integrate with Kubernetes.
+
+**🔑 Key Functions:**
+
+- Pulls container images from registries (e.g., Docker, Quay).
+
+- Creates, starts, stops, and deletes containers (e.g., using runtimes like containerd, CRI-O, or Docker) based on instructions from `kubelet`.
+
+- Manages container isolation via namespaces, cgroups, and security contexts.
+
+- Supports pluggable runtimes, with containerd being the most common in modern Kubernetes.
+
+**💡 Example:**
+
+When kubelet decides to start the NGINX container:
+
+- it delegates the actual container creation to the container runtime.
+
+- the runtime pulls the image from a registry, creates a container, sets up namespaces and cgroups, and launches the process. It’s the engine behind the scenes.
+
+
+#### Pod
+
+A Pod is the smallest deployable unit in Kubernetes, encapsulating one or more containers that share resources and run together on a worker node.
+
+**🔑 Key Functions:**
+
+- Pods are ephemeral, designed to run a specific workload and can be created/destroyed dynamically.
+
+- Containers within a pod share a network namespace (same IP and port space) and storage volumes, enabling tight integration.
+
+- Managed by the kubelet on a worker node, which ensures the pod's containers are running as specified.
+
+- Pods can be standalone or part of higher-level abstractions like Deployments or ReplicaSets.
+
+**💡 Example:**
+
+A basic pod specification (specified in YAML) looks similar to the following definition.
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: webapp
+  labels:
+    app: webapp-demo
+spec:
+  containers:
+  # Nginx web server
+  - name: web-server
+    image: nginx:alpine
+    ports:
+    - containerPort: 80
+    volumeMounts:
+    - name: log-volume
+      mountPath: /var/log/nginx
+
+  # Sidecar for log processing
+  - name: log-sidecar
+    image: busybox:latest
+    command: ["/bin/sh"]
+    args: ["-c", "tail -f /logs/access.log"]
+    volumeMounts:
+    - name: log-volume
+      mountPath: /logs
+
+  volumes:
+  - name: log-volume
+    emptyDir: {}
+```
+
+The YAML above defines a pod named web-server with a single container running the nginx web server, exposing port 80. The pod also includes a sidecar container (for logging) sharing the same network and storage.
+
+Therefore, we have a pod with two containers: one running Nginx, and another running a sidecar container that logs HTTP requests.
+
+- The pod is scheduled onto a node.
+
+- Both containers share the same network namespace, so the sidecar can monitor traffic to Nginx directly.
+
+- The Pod is deployed, scaled, and managed as a single unit (includes containers running within Pod).
+
+#### Container
+
+A container is a lightweight, isolated environment within a pod that runs a single application or process, managed by the container runtime. It is based on a container image, which is a static and portable package (e.g., a Node.js app with node:18-alpine, dependencies, and code). An image is immutable and stored in a container registry (like Docker Hub).
+
+**🔑 Key Functions:**
+
+- Containers are live, runnable instances created from an image. It includes the image’s contents plus an isolated runtime environment (e.g., memory, CPU, network). They are executed by the container runtime (e.g., containerd, CRI-O).
+
+- They are isolated using OS features like `namespaces` and `cgroups` for CPU, memory, and storage limits.
+
+- Containers in a pod share the pod’s resources (e.g., IP address, volumes) but are otherwise isolated from other pods.
+
+- The kubelet instructs the container runtime to start, stop, or monitor containers based on pod specifications.
+
+**💡 Example:**
+
+A basic Docker image example involves:
+
+- creating a Dockerfile to define the image's contents
+
+- building and tagging the image
+
+- pushing the image to a container registry
+
+The following example demonstrates a basic image definition for a Nodejs application.
+
+```yaml
+# Use an official and existing parent image like nodejs
+FROM node:18-alpine
+
+# Set working directory in container
+WORKDIR /app
+
+# Copy package.json and package-lock.json to working directory
+COPY package*.json ./
+
+# Install application dependencies
+RUN npm install
+
+# Copy the application code
+COPY . .
+
+# Expose port 3000
+EXPOSE 3000
+
+# Define the command to run when the container starts
+CMD [ "node", "server.js" ]
+```
 
 ---
 
@@ -512,7 +833,7 @@ Key components on each node include:
 
 ---
 
-## 🤝 Interactions Between Components
+## 🤝 Control Plane / Data Plane Interactions
 
 Kubernetes operates as a distributed system where components (control plane and node-level) interact primarily through the `kube-apiserver` (located in control plane) and work in a control loop to continuously monitor and reconcile the cluster's state. The workflow involves creating, updating, and managing Kubernetes objects (e.g., `Pods`, `Deployments`, `Services`) to run workloads, handle networking, and enforce policies. These interactions are asynchronous, event-driven, and rely on the following principles:
 
@@ -528,7 +849,9 @@ Kubernetes operates as a distributed system where components (control plane and 
 
 - **Event-Driven Architecture**: Components watch for changes (e.g., new Pods, node failures) and react accordingly, often triggered by updates in etcd.
 
-The following interaction diagram demonstrates a simply workflow the includes the following actions:
+### Example 1: Simple Workflow
+
+The following interaction diagram demonstrates a simple workflow that includes the following actions:
 
 🐾 Step 1 - User applies a `Deployment`  
 🐾 Step 2 - User applies a `Service`  
@@ -597,6 +920,236 @@ sequenceDiagram
       DP-->>User: Serve HTTP response
     end
 ```
+
+### Example 2: Detailed Pod Creation/Termination Workflow
+
+To better understand how the interactions between the various Control Plane / Data Plane components work, this example illustrates an end-to-end lifecycle of a Pod, from scheduling to termination. For the sake of simplicity, the process is explained using the following 5 primary steps:
+
+```text
+
+           1                    2                      3                      4                       5
+  [🕓 Scheduling]  ⟶  [🛠️ Pod Creation]  ⟶  [🌐 Networking]  ⟶  [🔁 Monitoring Loop]  ⟶  [♻️ Termination]
+
+```
+
+The aforementioned 5 steps will be explained in more detail in the following sections:
+
+- [1 - Scheduling](#-1---scheduling): The control plane’s scheduler assigns a pod to a node based on resource availability and constraints, with the kubelet reporting node status to inform the decision.
+
+- [2 - Pod Creation](#️-2---pod-creation): The kubelet on the assigned node pulls container images, sets up namespaces, and starts containers using the container runtime, mounting volumes via the CSI driver if needed.
+
+- [3 - Networking](#-3---networking): The CNI plugin assigns a unique IP to the pod, and kube-proxy configures network rules to enable pod-to-pod communication and service load balancing.
+
+- [4 - Monitoring Loop](#-4---monitoring-loop): The kubelet continuously checks pod health via liveness and readiness probes, restarts failed containers, monitors resource usage, and updates service routing with kube-proxy.
+
+- [5 - Termination](#️-5---termination): The kubelet gracefully stops containers, cleans up network and storage resources with the CNI plugin and CSI driver, and reports completion to the control plane.
+
+📈 Before covering the 5 steps in detail, the following diagram illustrates the interactions between the various components.
+
+```mermaid
+---
+title: Data Plane Interaction Diagram
+---
+%%{init: { 'themeVariables': { 'noteBkgColor': '#fff9db', 'noteBorderColor': '#c2255c', 'noteTextColor': '#c2255c'}}}%%
+sequenceDiagram
+  box rgb(0, 121, 107) User
+    participant client
+  end
+
+  box rgb(57, 73, 171) Control Plane
+    participant API as API Server
+    participant Scheduler as Scheduler
+    participant Etcd as etcd
+  end    
+
+  box rgb(92, 107, 192) Data Plane
+    participant Kubelet as Kubelet
+    participant Runtime as Container Runtime
+    participant Proxy as Kube-proxy      
+  end
+
+  client->>API: Request to create pod
+  API->>API: Validate spec and create Pod     
+  
+  rect rgb(255,255,255, 0.1)
+    Note over API, Runtime: 🕓 1 - Scheduling 🕓
+    Runtime-->>Kubelet: Provide resource usage data
+    Kubelet-->>API: Report node status and resource metrics
+    API-->>Scheduler: Notify Pod Created
+    Scheduler->>Scheduler: Find and select available Node
+    Scheduler-->>API: Update Pod with Node assignment (Bind Pod to Node)
+    API->>Etcd: Update Pod binding
+    API-->>Kubelet: Notify (watch assigned Pods)
+  end
+
+  rect rgb(255,255,255, 0.1)
+    Note over Kubelet, Runtime: 🛠️ 2 - Pod Creation 🛠️
+    Kubelet->>Kubelet: Receive and validate Pod spec
+    Kubelet->>Runtime: Pull images and start containers
+    Runtime->>Runtime: Launche containers in isolated namespaces
+    Runtime-->>Kubelet: Container status
+  end
+
+  rect rgb(255,255,255, 0.1)
+    Note over Kubelet, Proxy: 🌐 3 - Networking 🌐
+    Kubelet->>Proxy: Update endpoints (if service involved)
+    Proxy->>Proxy: Set up network rules (e.g., iptables)
+  end
+
+  rect rgb(255,255,255, 0.1)
+    Note over API,Runtime: 🔁 4 - Monitoring Loop 🔁
+    loop Monitoring Loop
+        Kubelet->>Runtime: Check health (probes)
+        Kubelet->>API: Report Pod/Node status
+        API->>Etcd: Update status
+    end
+  end
+
+  Note over Kubelet,API: If failure, Control Plane reschedules
+
+  client->>API: Request to delete Pod
+  API->>API: Validate and mark Pod for deletion
+
+  rect rgb(255,255,255, 0.1)
+    Note over Kubelet,API: ♻️ 5 - Termination ♻️
+    API-->>Kubelet: Notify (watch Pods marked for deletion)
+    Kubelet->>Runtime: Sends SIGTERM to gracefully terminate containers
+    Runtime->>Runtime: Stops and removes containers, freeing cgroups and namespaces
+    Runtime->>Runtime: Cleans up the container’s isolated network stack
+    Runtime->>Runtime: Removes ephemeral storage
+  end
+```
+
+#### 🕓 1 - Scheduling
+
+The control plane’s `scheduler` assigns a pod to a node based on resource requirements, node affinity, taints/tolerations, and other constraints. The `scheduler` evaluates node capacity and policies, then updates the pod’s spec with the chosen node’s name.
+
+<ins>Control Plane Role</ins>:
+
+- **kube-scheduler**: Watches the API server for unscheduled Pods, evaluates node suitability based on factors like resource availability and affinity rules, and writes the `Pod->Node` binding back to the API server.
+
+- **kube-apiserver**: Accepts the Pod creation request, authenticates/authorizes it, and notifies `kubelet` (via watch mechanism) of new Pod.
+
+- **etcd**: Pod object persisted and notifies `kube-apiserver`.
+
+<ins>Data Plane Role</ins>:
+  
+Although the data plane is not directly involved with scheduling, each node reports on resource availability thereby influencing scheduling decisions. Once scheduled, the `kubelet` on the target node receives the Pod spec via the API server. The following components are involved:
+  
+- **Kubelet**: Reports node status and resource metrics to the control plane.
+  
+- **Container Runtime**: Provides resource usage data (e.g., via CRI metrics) to the `kubelet`.
+
+#### 🛠️ 2 - Pod Creation
+
+Once scheduling is complete (ie., pod assigned to node by `scheduler`), the `kubelet` on that node detects the new pod spec via the `kube-api-server`. The `kubelet` uses the `Container Runtime Interface (CRI)` to instruct the `container runtime` (e.g., containerd, CRI-O) to create and start the containers within the pod.
+
+<ins>Control Plane Role</ins>:
+
+- **kube-apiserver**: Stores and serves the Pod spec that kubelet watches; admission controllers may inject defaults (e.g., image pull secrets, sidecars) or deny invalid specs.
+
+- **kube-controller-manager**: Runs controllers that may react to Pod creation (for example, the service account/token controller ensures service account tokens are available, the PV/PVC controllers may bind volumes required by the Pod).
+
+- **etcd**: Persists the Pod object and any related resource state.
+
+<ins>Data Plane Role</ins>:
+
+- **kubelet**:
+  - Validates the Pod spec.
+  - Pulls container images using the `container runtime`.
+  - Creates containers and sets up volumes.
+
+- **container runtime**:
+  - Launches containers in isolated namespaces.
+  - Manages container lifecycle (start, stop, restart).
+
+- **Storage**: If the pod uses Persistent Volumes (PVs), the kubelet works with the Container Storage Interface (CSI) driver to mount volumes.
+
+- **CNI plugin**:
+  - Assigns a unique IP to the Pod.
+  - Sets up network interfaces and routes.
+
+- **kube-proxy**:
+  - Updates iptables or IPVS rules to route traffic to the new Pod if it’s part of a Service.
+
+#### 🌐 3 - Networking
+
+Using a `Container Network Interface (CNI)` plugin, kubernetes ensures pod communication within the cluster. Each pod gets a unique IP address within the cluster’s network, and services provide load balancing.
+
+- **Pod-to-Pod Communication**:
+  - Enabled by CNI plugins
+  - Each Pod gets its own IP
+
+- **Service Discovery**:
+  - **kube-proxy** ensures traffic to a Service is load-balanced across Pods.
+  - DNS resolution is handled by CoreDNS, which runs as a Pod itself.
+
+<ins>Control Plane Role</ins>:
+
+- **kube-apiserver**: Stores `Service`, `Endpoints`,  and `NetworkPolicy` objects; serves them to controllers, kubelets and DNS components via watches.
+
+- **Endpoints controller** (part of the controller-manager): Reconciles Service -> Pod endpoint mappings and updates the Endpoints object so kube-proxy and CoreDNS can route and resolve traffic.
+
+- **cloud-controller-manager / service controller**: When a Service of type LoadBalancer is created, the cloud-controller-manager (or an external controller) interacts with the cloud provider to provision/load-balance and then updates the Service status via the API server.
+
+- **etcd**: Persists networking-related objects and their status.
+
+<ins>Data Plane Role</ins>:
+
+- **CNI Plugin**: Configures pod networking by setting up virtual interfaces, bridges, or overlays. Common CNI plugins include Flannel, Calico, or Weave.
+
+- **Kube-proxy**: Runs on each node and manages network rules (e.g., iptables, IPVS) for services, enabling load balancing across pods. For example, it routes traffic to the correct pod IP based on service selectors.
+
+- **Pod Network**: Pods communicate via their assigned IPs, either directly or through services. External traffic may enter via an Ingress controller or LoadBalancer.
+
+#### 🔁 4 - Monitoring Loop
+
+Once a pod is running, the kubelet continuously monitors its health, resource usage, and status. It performs liveness, readiness, and startup probes (if defined) to check container health, restarts containers if they fail, and reports status to the control plane. The kubelet also monitors node health and evicts pods if resources are constrained.
+
+<ins>Control Plane Role</ins>:
+
+- **kube-apiserver**: Receives status updates from kubelets (Pod/Node status), stores them in `etcd`, and serves them to controllers and other clients via watch streams.
+
+- **kube-controller-manager**: Controllers (ReplicaSet, Deployment, StatefulSet, Node controller) observe status and reconcile differences — e.g., creating replacement Pods for failed ones, marking nodes as NotReady and triggering evictions.
+
+- **Horizontal Pod Autoscaler (controller)**: Uses metrics (from metrics-server or external metrics) to scale ReplicaSets/Deployments by updating desired replica counts via the API server.
+
+- **etcd**: Stores status and resource versions that controllers use for reconciliation.
+
+<ins>Data Plane Role</ins>:
+
+- **Kubelet**: Executes probes (e.g., HTTP, TCP, command-based) to check container health. For liveness probes, it restarts containers that fail. For readiness probes, it updates pod status to control traffic flow. It also monitors resource usage (via cAdvisor) and enforces resource limits.
+
+- **Container Runtime**: Provides container metrics (e.g., CPU, memory usage) and executes restart commands when needed.
+
+- **Kube-proxy**: Adjusts service routing based on readiness probe results (e.g., removing unhealthy pods from service endpoints).
+
+#### ♻️ 5 - Termination
+
+If a pod is deleted (e.g., via `kubectl delete pod` or a ReplicaSet scaling down), fails or the node becomes unhealthy, the control plane reschedules pods elsewhere, and the kubelet gracefully terminates containers and handles resource cleanup.
+
+<ins>Control Plane Role</ins>:
+
+- **kube-api-server**: When a Pod fails or is deleted (manually or via ReplicaSet/Deployment update), the API server updates the Pod status.
+
+- **kube-controller-manager**: Controllers (ReplicaSet/Deployment) notice the Pod deletion and create replacement Pods to maintain desired state. The PV controller or external provisioner may handle volume detach/cleanup and update PersistentVolume/PersistentVolumeClaim status.
+
+- **etcd**: Persists the deletion timestamp/finalizers and related resource state so controllers and kubelets can coordinate graceful deletion.
+
+- **scheduler/controller leader election**: If the node is unhealthy, controllers and the scheduler (through reconcilers) participate in re-creating or rescheduling workloads by writing new Pod specs or bindings to the API server.
+
+<ins>Data Plane Role</ins>:
+
+- **Kubelet**: Sends a `SIGTERM (Signal Terminate)` to the container’s main process, waits for a grace period (default 30 seconds), then sends `SIGKILL (Signal Kill)` if the process hasn’t stopped. It also removes the pod’s network and storage resources.
+
+<br />
+
+  > ☝️🤓
+  >   
+  > SIGTERM is a "polite" signal sent to a process to request its graceful termination, allowing the program to perform necessary cleanup tasks like saving data or closing connections before it exits. It is the default signal sent by the kill command in Unix-like systems and a standard first step for container orchestrators like Kubernetes to allow processes a chance to shut down cleanly.  
+  > &nbsp;
+
+<br />
 
 ---
 
