@@ -4,7 +4,7 @@
 
 A journey into the foundational features, patterns and practices of Kubernetes. Written for Developers, DevOps Engineers, and Architects, this series offers both a thoeretical and practical approach to learning and understanding Kubernetes.
 
-## Topics
+## Kubernetes Topics
 
 - [Architecture](./architecture)
 
@@ -13,5 +13,11 @@ A journey into the foundational features, patterns and practices of Kubernetes. 
   - [Overview](./architecture/architecture-overview.md):
 
     Provides a comprehensive overview of Kubernetes architecture, emphasizing its modular design and the importance of understanding its components for effective management, scalability, and troubleshooting.
+
+## Labs
+
+| Name | Title |
+| ---- | ----------- |
+| **[lab-0001](./labs/lab-0001.md)** | Submit request to Kubernetes API Server using curl |
 
 ---
