@@ -11,9 +11,5 @@ This project represents a personal knowledge base for documenting my learning jo
 - [Kubernetes](./kubernetes)
 
   A journey into the foundational features, patterns and practices of Kubernetes. Written for Developers, DevOps Engineers, and Architects, this series offers both a thoeretical and practical approach to learning and understanding Kubernetes.
-  
-  - [Architecture](./architecture)
-
-    A comprehensive exploration of Kubernetes' core components, design principles, and operational mechanics.
 
 ---
