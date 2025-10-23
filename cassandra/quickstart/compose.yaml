@@ -1,0 +1,55 @@
+name: cassandra-stack
+services:
+  cassandra:
+    image: cassandra:5
+    container_name: cassandra
+    restart: unless-stopped
+    ports:
+      - "9042:9042"
+    volumes:
+      - cassandra_data:/var/lib/cassandra
+    networks:
+      - default
+    environment:
+      - CASSANDRA_CLUSTER_NAME=MyCluster
+      - CASSANDRA_SEEDS=cassandra
+    healthcheck:
+      test: ["CMD", "cqlsh", "cassandra", "9042", "-e", "DESCRIBE cluster"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  cassandra-init:
+    image: cassandra:5
+    container_name: cassandra-init
+    volumes:
+      - ./init.sh:/init.sh:ro
+      - ./init.cql:/init.cql:ro
+    networks:
+      - default
+    depends_on:
+      - cassandra
+    command: ["/bin/bash", "/init.sh"]
+  
+  cassandra-client:
+    image: cassandra:5
+    container_name: cassandra-client
+    volumes:
+      - ./:/workspace:ro
+    networks:
+      - default
+    depends_on:
+      - cassandra
+    # Keep container running for interactive use
+    command: ["tail", "-f", "/dev/null"]
+    # Optional: add any development tools you commonly use
+    environment:
+      - CQLSH_HOST=cassandra
+      - CQLSH_PORT=9042
+
+volumes:
+  cassandra_data:
+
+networks:
+  default:
+    name: cassandra
