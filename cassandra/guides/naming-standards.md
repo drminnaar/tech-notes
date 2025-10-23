@@ -67,7 +67,9 @@ The primary recommendation is **`snake_case`** (lowercase with words separated b
 
 If you omit the index name when using `CREATE INDEX`, Cassandra will automatically assign a name using this pattern:
 
-$$\text{<table\_name>}\_\text{<column\_name>}\_\text{idx}$$
+```
+<table_name>_<column_name>_idx
+```
 
 - **Example:**
   - For a table named `user_profiles` and a column `email`, the default index name would be **`user_profiles_email_idx`**.
