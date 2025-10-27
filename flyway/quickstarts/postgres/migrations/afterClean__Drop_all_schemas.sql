@@ -1,0 +1,3 @@
+DROP SCHEMA IF EXISTS operations;
+DROP SCHEMA IF EXISTS music_catalog;
+DROP SCHEMA IF EXISTS sales;

@@ -1,0 +1,78 @@
+name: postgres-stack
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  default:
+    name: cassandra
+
+services:
+  postgres:
+    image: postgres:18-alpine
+    container_name: postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${LAB_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${LAB_POSTGRES_PASSWORD}
+      POSTGRES_DB: ${LAB_POSTGRES_DB}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - default
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${LAB_POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    # Optional: Resource limits for production-like constraints
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+        reservations:
+          cpus: '0.25'
+          memory: 512M
+
+  postgres-client:
+    image: postgres:18-alpine
+    container_name: postgres-client
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - default
+    environment:
+      POSTGRES_USER: ${LAB_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${LAB_POSTGRES_PASSWORD}
+      POSTGRES_DB: ${LAB_POSTGRES_DB}
+    # Keep container running idly for exec access
+    command: ["tail", "-f", "/dev/null"]
+
+# -------------------------------------------------------------------------------------------------
+# Flyway Services
+# -------------------------------------------------------------------------------------------------
+  flyway:
+      profiles: ["flyway"]
+      container_name: flyway
+      image: flyway/flyway:11-alpine
+      entrypoint: /bin/sh
+      command: -c "flyway info"
+      environment:
+        - FLYWAY_URL=jdbc:postgresql://postgres/${LAB_POSTGRES_DB}
+        - FLYWAY_LOCATIONS=filesystem:/flyway/sql
+        - FLYWAY_SQL_MIGRATION_SUFFIXES=.sql
+        - FLYWAY_USER=${LAB_POSTGRES_USER}
+        - FLYWAY_PASSWORD=${LAB_POSTGRES_PASSWORD}
+        - FLYWAY_SCHEMAS=migrations,operations,music_catalog,sales
+        - FLYWAY_DEFAULT_SCHEMA=migrations
+        - FLYWAY_CONNECT_RETRIES=10
+        - FLYWAY_CLEAN_DISABLED=false
+      volumes:
+        - ./migrations:/flyway/sql
+      networks:
+        - default
