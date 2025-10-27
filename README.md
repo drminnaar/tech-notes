@@ -16,6 +16,10 @@ This project represents a personal knowledge base for documenting my learning jo
   
   A curated compilation of various git guides that cover setup, common commands, and git commit convention.
 
+- [Guides](./guides)
+  
+  This section provides a collection of quickstart guides to get up and running with various technology stacks like Mongo DB, Cassandra DB, Posgres, etc.
+
 - [Kubernetes](./kubernetes)
 
   A journey into the foundational features, patterns and practices of Kubernetes. Written for Developers, DevOps Engineers, and Architects, this section offers both a thoeretical and practical approach to learning and understanding Kubernetes.
