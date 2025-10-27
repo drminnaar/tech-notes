@@ -3,11 +3,14 @@
 # makes script exit on errors (-e) and on references to unset variables (-u)
 set -eu
 
+echo -e "\n"
+
 # Check if a parameter is provided
 if [ $# -eq 0 ]; then
     echo "Error: No parameter provided"
     echo "Usage: $0 <command>"
-    echo "Available commands: clean, migrate, info, validate, repair"
+    echo "Available commands: clean, migrate, info, validate, repair, version"
+    echo -e "\n"
     exit 1
 fi
 
@@ -15,7 +18,7 @@ fi
 command="$1"
 
 # Define valid commands
-valid_commands=("clean" "migrate" "info" "validate" "repair")
+valid_commands=("clean" "migrate" "info" "validate" "repair" "version")
 
 # Check if the command is valid
 is_valid=0
@@ -30,9 +33,11 @@ done
 if [ $is_valid -eq 0 ]; then
     echo "Error: Invalid command '$command'"
     echo "Usage: $0 <command>"
-    echo "Available commands: clean, migrate, info, validate, repair"
+    echo "Available commands: clean, migrate, info, validate, repair, version"
+    echo -e "\n"
     exit 1
 fi
 
 # Execute the appropriate docker compose command
-docker compose run --rm "migration-${command}"
+docker compose run --rm flyway -c "flyway ${command}"
+echo -e "\n"

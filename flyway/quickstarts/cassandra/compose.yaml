@@ -10,7 +10,7 @@ networks:
 services:
 
 # -------------------------------------------------------------------------------------------------
-# Flyway Services
+# Cassandra Services
 # -------------------------------------------------------------------------------------------------
   cassandra:
     image: cassandra:5
@@ -30,99 +30,46 @@ services:
       - CASSANDRA_DC=datacenter1
       - CASSANDRA_SEEDS=cassandra
       - CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch
+    healthcheck:
+      test: ["CMD", "cqlsh", "cassandra", "9042", "-e", "DESCRIBE cluster"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  cassandra-client:
+    image: cassandra:5
+    container_name: cassandra-client
+    volumes:
+      - ./:/workspace:ro
+    networks:
+      - default
+    depends_on:
+      cassandra:
+        condition: service_healthy
+    # Keep container running for interactive use
+    command: ["tail", "-f", "/dev/null"]
+    # Optional: add any development tools you commonly use
+    environment:
+      - CQLSH_HOST=cassandra
+      - CQLSH_PORT=9042
 
 # -------------------------------------------------------------------------------------------------
 # Flyway Services
-# - info: Displays information about the current state of the database and the available migrations
-# - migrate: Applies pending migrations to the database
-# - repair: Used to fix issues in the flyway_schema_history table, which tracks the applied migrations
-# - clean: Completely wipes the configured database keyspaces clean, dropping all objects
-# - validate:
-#     - Performs checks to ensure the integrity of your migration setup.
-#     - It verifies that the checksums of applied migrations (stored in the flyway_schema_history table)
-#       match the checksums of the corresponding migration files, and it detects any unexpected changes
-#       to the migration scripts or the migration sequence.
 # -------------------------------------------------------------------------------------------------
-  migration-info:
-      profiles: ["migration-info"]
-      container_name: migration-info
+  flyway:
+      profiles: ["flyway"]
+      container_name: flyway
       image: flyway/flyway:11-alpine
       entrypoint: /bin/sh
       command: -c "flyway info"
       environment:
         - FLYWAY_URL=jdbc:cassandra://cassandra:9042?localdatacenter=datacenter1&requesttimeout=30000
+        - FLYWAY_LOCATIONS=filesystem:/flyway/sql
         - FLYWAY_SQL_MIGRATION_SUFFIXES=.cql
-        - FLYWAY_SCHEMAS=migrations
+        - FLYWAY_SCHEMAS=migrations,customers
         - FLYWAY_DEFAULT_SCHEMA=migrations
         - FLYWAY_CONNECT_RETRIES=10
-        - FLYWAY_EXECUTE_IN_TRANSACTION=false
-      volumes:
-        - ./migrations:/flyway/sql
-      networks:
-        - default
-  migration-migrate:
-      profiles: ["migration-migrate"]
-      container_name: migration-migrate
-      image: flyway/flyway:11-alpine
-      entrypoint: /bin/sh
-      command: -c "flyway migrate"
-      environment:
-        - FLYWAY_URL=jdbc:cassandra://cassandra:9042?localdatacenter=datacenter1&requesttimeout=60000
-        - FLYWAY_SQL_MIGRATION_SUFFIXES=.cql
-        - FLYWAY_SCHEMAS=migrations
-        - FLYWAY_CONNECT_RETRIES=10
-        - FLYWAY_EXECUTE_IN_TRANSACTION=false
-      volumes:
-        - ./migrations:/flyway/sql
-      networks:
-        - default
-  migration-repair:
-      profiles: ["migration-repair"]
-      container_name: migration-repair
-      image: flyway/flyway:11-alpine
-      entrypoint: /bin/sh
-      command: -c "flyway repair"
-      environment:
-        - FLYWAY_URL=jdbc:cassandra://cassandra:9042?localdatacenter=datacenter1&request.timeout=30s&schema.request.timeout=30s
-        - FLYWAY_SQL_MIGRATION_SUFFIXES=.cql
-        - FLYWAY_SCHEMAS=migrations
-        - FLYWAY_CONNECT_RETRIES=10
-        - FLYWAY_EXECUTE_IN_TRANSACTION=false
-      volumes:
-        - ./migrations:/flyway/sql
-      networks:
-        - default
-  migration-clean:
-      profiles: ["migration-clean"]
-      container_name: migration-clean
-      image: flyway/flyway:11-alpine
-      entrypoint: /bin/sh
-      command: -c "flyway clean"
-      environment:
-        - FLYWAY_URL=jdbc:cassandra://cassandra:9042?localdatacenter=datacenter1&requesttimeout=60000
-        - FLYWAY_SQL_MIGRATION_SUFFIXES=.cql
-        - FLYWAY_SCHEMAS=customers,migrations
         - FLYWAY_CLEAN_DISABLED=false
-        - FLYWAY_OUTPUT_TYPE=json
-        - FLYWAY_CONNECT_RETRIES=10
-        - FLYWAY_EXECUTE_IN_TRANSACTION=false
-      volumes:
-        - ./migrations:/flyway/sql
-      networks:
-        - default
-  migration-validate:
-      profiles: ["migration-validate"]
-      container_name: migration-validate
-      image: flyway/flyway:11-alpine
-      entrypoint: /bin/sh
-      command: -c "flyway validate"
-      environment:
-        - FLYWAY_URL=jdbc:cassandra://cassandra:9042?localdatacenter=datacenter1&requesttimeout=30000
-        - FLYWAY_SQL_MIGRATION_SUFFIXES=.cql
-        - FLYWAY_SCHEMAS=migrations
-        - FLYWAY_CLEAN_DISABLED=false
-        - FLYWAY_OUTPUT_TYPE=json
-        - FLYWAY_CONNECT_RETRIES=10
         - FLYWAY_EXECUTE_IN_TRANSACTION=false
         - FLYWAY_IGNORE_MIGRATION_PATTERNS=*:pending
       volumes:
