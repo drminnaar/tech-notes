@@ -1,0 +1,34 @@
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+
+# Local History for Visual Studio Code
+.history/
+
+# Built Visual Studio Code Extensions
+*.vsix
+
+# Docker-specific files
+Dockerfile.local
+docker-compose.override.yml
+*.log
+
+# Docker build and runtime artifacts
+*.container
+*.image
+.dockerenv
+Dockerrun.aws.json
+
+# Local environment files
+.env
+.env.local
+*.env.backup
+
+# Temporary files
+tmp/
+temp/
+**/tmp/
+*.tmp
