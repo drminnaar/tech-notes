@@ -1,4 +1,4 @@
-![](https://github.com/user-attachments/assets/d2b85322-5878-44df-80c5-6b33cf7dacbe)
+![](https://github.com/user-attachments/assets/6cc82f2c-9712-443f-9b79-6cfae77b6ac2)
 
 # Tech Notes README
 
