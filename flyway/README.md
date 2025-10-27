@@ -14,3 +14,4 @@ This section covers topics relating to both the theory and practice of using [Re
 
 - [Quickstarts](./quickstarts)
   - [Cassandra](./quickstarts/cassandra)
+  - [Postgres](./quickstarts/postgres)
