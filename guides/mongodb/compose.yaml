@@ -1,0 +1,91 @@
+name: mongo-stack
+
+volumes:
+  mongo_data:
+
+networks:
+  default:
+    name: mongo
+
+services:
+
+  # -------------------------------------------------------------------------------------------------
+  # Mongo Database Service
+  # -------------------------------------------------------------------------------------------------
+  mongo:
+    image: mongo:8-noble
+    container_name: mongo
+    restart: unless-stopped
+    ports:
+      - 27017:27017
+    networks:
+      - default
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${LAB_MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${LAB_MONGO_INITDB_ROOT_PASSWORD}
+    volumes:
+      - type: volume
+        source: mongo_data
+        target: /data/db
+    healthcheck:
+      test: ["CMD-SHELL", "mongosh --eval \"db.adminCommand('ping')\" >/dev/null 2>&1 || mongo --eval \"db.adminCommand('ping')\" >/dev/null 2>&1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  # -------------------------------------------------------------------------------------------------
+  # Mongosh Jump Host Service - Used to access MongoDB using mongosh CLI
+  # -------------------------------------------------------------------------------------------------
+  mongosh:
+    image: mongo:8-noble
+    container_name: mongosh
+    entrypoint: ["tail", "-f", "/dev/null"]
+    networks:
+      - default
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${LAB_MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${LAB_MONGO_INITDB_ROOT_PASSWORD}
+    depends_on:
+      mongo:
+        condition: service_healthy
+  
+  # -------------------------------------------------------------------------------------------------
+  # Mongo Database Seed Service - Does initial seeding of mflix data
+  # -------------------------------------------------------------------------------------------------
+  mongo-seed:
+    container_name: mongo-seed
+    build: ./mongo-seed
+    networks:
+      - default
+    environment:
+      - MONGO_ROOT_USERNAME=${LAB_MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_ROOT_PASSWORD=${LAB_MONGO_INITDB_ROOT_PASSWORD}
+    depends_on:
+      mongo:
+        condition: service_healthy
+  
+  # -------------------------------------------------------------------------------------------------
+  # Mongo Database GUI Service - Web interface accessible via browser at http://localhost:8081
+  # -------------------------------------------------------------------------------------------------
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-express
+    restart: unless-stopped
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${LAB_ME_CONFIG_MONGODB_ADMINUSERNAME}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${LAB_ME_CONFIG_MONGODB_ADMINPASSWORD}
+      ME_CONFIG_MONGODB_SERVER: ${LAB_ME_CONFIG_MONGODB_SERVER}
+      ME_CONFIG_OPTIONS_EDITORTHEME: "ambiance"
+      ME_CONFIG_BASICAUTH_ENABLED: true
+      ME_CONFIG_BASICAUTH_USERNAME: ${LAB_ME_CONFIG_BASICAUTH_USERNAME}
+      ME_CONFIG_BASICAUTH_PASSWORD: ${LAB_ME_CONFIG_BASICAUTH_PASSWORD}
+    networks:
+      - default
+    depends_on:
+      mongo:
+        condition: service_healthy
+      mongo-seed:
+        condition: service_started
