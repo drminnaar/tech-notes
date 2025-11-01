@@ -1,0 +1,74 @@
+name: mssql-stack
+
+volumes:
+  mssql_data:
+    driver: local
+
+networks:
+  default:
+    name: mssql
+
+services:
+  # -----------------------------------------------------------------------------
+  # MSSQL Services
+  # -----------------------------------------------------------------------------
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: mssql
+    restart: unless-stopped
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=${MSSQL_SA_PASSWORD}
+      - MSSQL_PID=Express
+    ports:
+      - "1433:1433"
+    volumes:
+      - mssql_data:/var/opt/mssql
+    networks:
+      - default
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S mssql -U sa -P ${MSSQL_SA_PASSWORD} -C -Q 'SELECT 1' || exit 1"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 30s  # Give time for SQL Server to initialize
+    # Optional: Resource limits (uncomment for constrained environments)
+    # deploy:
+    #   resources:
+    #     limits:
+    #       cpus: '1.0'
+    #       memory: 2G
+    #     reservations:
+    #       cpus: '0.25'
+    #       memory: 1G
+  
+  mssql-init:
+    image: mcr.microsoft.com/mssql-tools
+    container_name: mssql-init
+    command: /bin/bash -c "/scripts/wait-for-it.sh --timeout=180 mssql:1433 -- /bin/bash /scripts/init-db.sh"
+    volumes:
+      - ./init-scripts/init-db.sh:/scripts/init-db.sh:ro
+      - ./init-scripts/init-db.sql:/scripts/init-db.sql:ro
+      - ./init-scripts/wait-for-it.sh:/scripts/wait-for-it.sh:ro
+    environment:
+      - MSSQL_PASSWORD=${MSSQL_SA_PASSWORD}
+      - MSSQL_USERNAME=${MSSQL_USERNAME}
+    depends_on:
+      mssql:
+        condition: service_healthy
+    networks:
+      - default
+
+  mssql-client:
+    image: mcr.microsoft.com/mssql-tools
+    container_name: mssql-client
+    command: ["tail", "-f", "/dev/null"]
+    environment:
+      - MSSQL_PASSWORD=${MSSQL_SA_PASSWORD}
+      - MSSQL_USERNAME=${MSSQL_USERNAME}
+    depends_on:
+      mssql:
+        condition: service_healthy
+    networks:
+      - default
+    
