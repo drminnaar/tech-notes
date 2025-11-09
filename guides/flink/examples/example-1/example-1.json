@@ -1,0 +1,3 @@
+REV001:{"review_id":"REV001","product_id":"PROD001","user_id":"USER123","rating":5,"title":"Excellent sound quality!","comment":"Best headphones I've ever owned. Crystal clear audio.","timestamp":"2025-11-04T12:00:00Z"}
+REV002:{"review_id":"REV002","product_id":"PROD001","user_id":"USER456","rating":4,"title":"Great value","comment":"Good quality for the price, comfortable to wear.","timestamp":"2025-11-04T12:15:00Z"}
+REV003:{"review_id":"REV003","product_id":"PROD002","user_id":"USER789","rating":5,"title":"Perfect fit!","comment":"Very comfortable running shoes, excellent cushioning.","timestamp":"2025-11-04T12:30:00Z"}
