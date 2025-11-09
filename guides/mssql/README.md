@@ -96,7 +96,7 @@ Alternatively, use the provided utility script `compose.sh` to run common comman
 
 ### Connect To MSSQL Database
 
-The `sqlcmd.sh` script supports connecting to the Postgres database:
+The `sqlcmd.sh` script supports connecting to the MSSQL database:
 
 ```bash
 ./sqlcmd.sh
