@@ -1,0 +1,61 @@
+# See ./typesense.code-workspace for list of environments and variables
+
+@host = http://localhost:8108
+@api_key = {{$dotenv TN_TYPESENSE_API_KEY}}
+
+### Get all collections
+
+curl "{{host}}/collections" -X GET -H "Content-Type: application/json" -H "X-TYPESENSE-API-KEY: {{api_key}}"
+
+
+
+### Get products collection
+
+curl "{{host}}/collections/products" -X GET -H "Content-Type: application/json" -H "X-TYPESENSE-API-KEY: {{api_key}}"
+
+
+
+### Delete collection
+
+curl "{{host}}/collections/products" -X DELETE -H "Content-Type: application/json" -H "X-TYPESENSE-API-KEY: {{api_key}}"
+
+
+
+### Search all products
+
+// https://typesense.org/docs/29.0/api/search.html#search
+
+curl "{{host}}/collections/products/documents/search?q=*&page=4&per_page=3" -H "X-TYPESENSE-API-KEY: {{api_key}}"
+
+
+### Search with filters - by name field
+curl "{{host}}/collections/products/documents/search?q=kayak&query_by=name" -H "X-TYPESENSE-API-KEY: {{api_key}}"
+
+
+### Search with filters - by category field (kayak, bike)
+curl "{{host}}/collections/products/documents/search?q=kayak&query_by=category" -H "X-TYPESENSE-API-KEY: {{api_key}}"
+
+
+### Search with filters - by searchTerms field
+curl "{{host}}/collections/products/documents/search?q=beginner&query_by=searchTerms" -H "X-TYPESENSE-API-KEY: {{api_key}}"
+
+
+
+### Semantic Search
+
+// See https://typesense.org/docs/guide/semantic-search.html#step-3-semantic-search
+
+curl '{{host}}/multi_search' \
+    -H "X-TYPESENSE-API-KEY: {{api_key}}" \
+    -X POST \
+    -d '{
+      "searches": [
+        {
+          "q": "something for gravel",
+          "query_by": "description,name,searchTerms",
+          "collection": "products",
+          "prefix": "false",
+          "per_page": 3
+        }
+      ]
+    }'

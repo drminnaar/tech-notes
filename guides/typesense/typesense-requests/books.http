@@ -1,0 +1,81 @@
+@host=http://localhost:8108
+@api_key = {{$dotenv TN_TYPESENSE_API_KEY}}
+
+### Create book collection
+
+// https://typesense.org/docs/29.0/api/collections.html#create-a-collection
+
+curl "{{host}}/collections" -X POST \
+  -H "Content-Type: application/json" \
+  -H "X-TYPESENSE-API-KEY: {{api_key}}" \
+  -d '{
+  "name": "books",
+  "fields": [
+    {"name": "title", "type": "string"},
+    {"name": "authors", "type": "string[]"},
+    {"name": "rating", "type": "float"},
+    {"name": "id", "type": "string"}
+  ],
+  "default_sorting_field": "rating"
+}'
+
+
+### Retrieve book collection
+
+// See https://typesense.org/docs/29.0/api/collections.html#retrieve-a-collection
+
+curl "{{host}}/collections/books" -X GET \
+  -H "Content-Type: application/json" \
+  -H "X-TYPESENSE-API-KEY: {{api_key}}"
+
+
+### List all collections
+
+// See https://typesense.org/docs/29.0/api/collections.html#list-all-collections
+
+curl -H "X-TYPESENSE-API-KEY: {{api_key}}" \
+    -X GET \
+    "{{host}}/collections"
+
+
+### Delete collection
+
+// See https://typesense.org/docs/29.0/api/collections.html#drop-a-collection
+
+curl "{{host}}/collections/books" \
+  -X DELETE \
+  -H "Content-Type: application/json" \
+  -H "X-TYPESENSE-API-KEY: {{api_key}}"
+
+
+### Truncate collection
+
+// See https://typesense.org/docs/29.0/api/collections.html#truncate-a-collection
+
+curl "{{host}}/collections/books/documents?truncate=true" \
+  -X DELETE \
+  -H "Content-Type: application/json" \
+  -H "X-TYPESENSE-API-KEY: {{api_key}}"
+
+
+### Index documents
+
+// See https://typesense.org/docs/guide/semantic-search.html#step-2-index-your-json-data
+
+curl "{{host}}/collections/books/documents" \
+  -X POST \
+  -H "Content-Type: application/json" \
+  -H "X-TYPESENSE-API-KEY: {{api_key}}" \
+  -d '{
+  "id": "1",
+  "title": "Harry Potter",
+  "authors": ["J.K. Rowling"],
+  "rating": 4.8
+}'
+
+### Search
+
+// See https://typesense.org/docs/guide/semantic-search.html#step-3-semantic-search
+
+curl "{{host}}/collections/books/documents/search?q=harry&query_by=title,authors" \
+  -H "X-TYPESENSE-API-KEY: {{api_key}}"

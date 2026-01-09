@@ -1,0 +1,16 @@
+{
+  "folders": [
+    {
+      "path": ".",
+      "name": "Typesense",
+    }
+  ],
+  "settings": {
+    "rest-client.environmentVariables": {
+      "$shared": {},
+      "dev": {
+        "host": "http://localhost:8108"
+      }
+    }
+  }
+}

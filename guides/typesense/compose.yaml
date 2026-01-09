@@ -1,0 +1,64 @@
+name: typesense-stack
+
+volumes:
+  typesense-data:
+    driver: local
+
+networks:
+  default:
+    name: mongo
+
+services:
+  # Typesense search engine
+  typesense:
+    container_name: typesense
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "8108:8108"
+    volumes:
+      - typesense-data:/data
+    networks:
+      - default
+    environment:
+      - TYPESENSE_DATA_DIR=/data
+      - TYPESENSE_API_KEY=${TN_TYPESENSE_API_KEY}
+      - TYPESENSE_ENABLE_CORS=true
+
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8108/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+  # Typesense initialization service (seeds typesense and exits)
+  typesense-init:
+    build:
+      context: ./init-service
+      dockerfile: TypesenseInit/Dockerfile
+    container_name: typesense-init
+    restart: "no"
+    depends_on:
+      typesense:
+        condition: service_healthy
+    networks:
+      - default
+    environment:
+      - DOTNET_ENVIRONMENT=Docker
+      - Typesense__ApiKey=${TN_TYPESENSE_API_KEY}
+
+  # The Typesense Dashboard (UI)
+  typesense-dashboard:
+    image: ghcr.io/bfritscher/typesense-dashboard:latest
+    container_name: typesense-dashboard
+    restart: unless-stopped
+    depends_on:
+      typesense:
+        condition: service_healthy
+    networks:
+      - default
+    ports:
+      - "8109:80"

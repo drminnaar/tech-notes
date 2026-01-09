@@ -1,0 +1,1065 @@
+[
+  {
+    "id": "b0a1b2c3-d4e5-6789-b0a1-b2c3d4e5f678",
+    "sku": "WS-KAY-001",
+    "name": "Wilderness Systems Pungo 120",
+    "slug": "wilderness-systems-pungo-120",
+    "description": "The best-selling recreational kayak in the world. Fast, stable, and packed with features for lakes and calm rivers.",
+    "imageUrl": "https://example.com/images/kayak/pungo-120.jpg",
+    "colors": [
+      {
+        "name": "Red",
+        "hex": "#FF0000"
+      },
+      {
+        "name": "Blue",
+        "hex": "#0000FF"
+      },
+      {
+        "name": "Mango",
+        "hex": "#FFB347"
+      }
+    ],
+    "brand": "Wilderness Systems",
+    "category": "Kayaks",
+    "subcategory": "Recreational",
+    "type": "Watersports",
+    "stockQuantity": 68,
+    "stockLevel": "in-stock",
+    "rating": 4.8,
+    "reviewCount": 312,
+    "popularityScore": 96,
+    "basePrice": 1099.00,
+    "currentPrice": 989.10,
+    "isOnSale": true,
+    "salePercentage": 10,
+    "searchTerms": [
+      "Kayaks",
+      "Recreational",
+      "Sit-Inside",
+      "All Level"
+    ],
+    "listedAt": 1735988400,
+    "updatedAt": 1764846000
+  },
+  {
+    "id": "b0a1b2c3-d4e5-6789-b0a1-b2c3d4e5f678-2",
+    "sku": "WS-KAY-002",
+    "name": "Dagger Stratos 12.5 S",
+    "slug": "dagger-stratos-125-s",
+    "description": "Small-sized high-performance touring kayak for coastal and inland waters. Excellent glide and maneuverability.",
+    "imageUrl": "https://example.com/images/kayak/stratos-12.5s.jpg",
+    "colors": [
+      {
+        "name": "Citrus",
+        "hex": "#FFA500"
+      },
+      {
+        "name": "Aqua",
+        "hex": "#00CED1"
+      }
+    ],
+    "brand": "Dagger",
+    "category": "Kayaks",
+    "subcategory": "Touring",
+    "type": "Watersports",
+    "stockQuantity": 34,
+    "stockLevel": "in-stock",
+    "rating": 4.9,
+    "reviewCount": 187,
+    "popularityScore": 20,
+    "basePrice": 1449.00,
+    "currentPrice": 1449.00,
+    "isOnSale": false,
+    "salePercentage": 0,
+    "searchTerms": [
+      "Kayaks",
+      "Touring",
+      "Sea Kayak",
+      "Intermediate/Advanced"
+    ],
+    "listedAt": 1735988400,
+    "updatedAt": 1764846000
+  },
+  {
+    "id": "b0a1b2c3-d4e5-6789-b0a1-b2c3d4e5f678-3",
+    "sku": "WS-KAY-003",
+    "name": "Hobie Mirage Passport 10.5",
+    "slug": "hobie-mirage-passport-105",
+    "description": "Pedal-powered fishing and recreational kayak with MirageDrive GT and kick-up fins.",
+    "imageUrl": "https://example.com/images/kayak/passport-105.jpg",
+    "colors": [
+      {
+        "name": "Slate Blue",
+        "hex": "#6A5ACD"
+      },
+      {
+        "name": "Seagrass",
+        "hex": "#2E8B57"
+      }
+    ],
+    "brand": "Hobie",
+    "category": "Kayaks",
+    "subcategory": "Fishing",
+    "type": "Watersports",
+    "stockQuantity": 29,
+    "stockLevel": "in-stock",
+    "rating": 4.8,
+    "reviewCount": 203,
+    "popularityScore": 34,
+    "basePrice": 1799.00,
+    "currentPrice": 1619.10,
+    "isOnSale": true,
+    "salePercentage": 10,
+    "searchTerms": [
+      "Kayaks",
+      "Pedal",
+      "Fishing",
+      "Sit-On-Top"
+    ],
+    "listedAt": 1735988400,
+    "updatedAt": 1764846000
+  },
+  {
+    "id": "b0a1b2c3-d4e5-6789-b0a1-b2c3d4e5f678-4",
+    "sku": "WS-KAY-004",
+    "name": "Perception Joyride 10",
+    "slug": "perception-joyride-10",
+    "description": "Ultra-fun sit-inside recreational kayak with premium seating and great stability.",
+    "imageUrl": "https://example.com/images/kayak/joyride-10.jpg",
+    "colors": [
+      {
+        "name": "Funkadelic",
+        "hex": "#FF00AA"
+      },
+      {
+        "name": "Sunset",
+        "hex": "#FF4500"
+      }
+    ],
+    "brand": "Perception",
+    "category": "Kayaks",
+    "subcategory": "Recreational",
+    "type": "Watersports",
+    "stockQuantity": 87,
+    "stockLevel": "in-stock",
+    "rating": 4.7,
+    "reviewCount": 156,
+    "popularityScore": 100,
+    "basePrice": 899.00,
+    "currentPrice": 809.10,
+    "isOnSale": true,
+    "salePercentage": 10,
+    "searchTerms": [
+      "Kayaks",
+      "Recreational",
+      "Sit-Inside",
+      "Beginner/Intermediate"
+    ],
+    "listedAt": 1735988400,
+    "updatedAt": 1764846000
+  },
+  {
+    "id": "b0a1b2c3-d4e5-6789-b0a1-b2c3d4e5f678-5",
+    "sku": "WS-KAY-005",
+    "name": "Old Town Loon 106",
+    "slug": "old-town-loon-106",
+    "description": "Iconic recreational kayak updated with modern comfort and performance.",
+    "imageUrl": "https://example.com/images/kayak/loon-106.jpg",
+    "colors": [
+      {
+        "name": "Photic",
+        "hex": "#E6E6FA"
+      },
+      {
+        "name": "Black Cherry",
+        "hex": "#4B001F"
+      }
+    ],
+    "brand": "Old Town",
+    "category": "Kayaks",
+    "subcategory": "Recreational",
+    "type": "Watersports",
+    "stockQuantity": 52,
+    "stockLevel": "in-stock",
+    "rating": 4.8,
+    "reviewCount": 278,
+    "popularityScore": 36,
+    "basePrice": 999.99,
+    "currentPrice": 999.99,
+    "isOnSale": false,
+    "salePercentage": 0,
+    "searchTerms": [
+      "Kayaks",
+      "Recreational",
+      "Sit-Inside",
+      "All Level"
+    ],
+    "listedAt": 1735988400,
+    "updatedAt": 1764846000
+  },
+  {
+    "id": "b0a1b2c3-d4e5-6789-b0a1-b2c3d4e5f678-6",
+    "sku": "WS-KAY-006",
+    "name": "Jackson Kayak Antix 2.0 Medium",
+    "slug": "jackson-kayak-antix-20-medium",
+    "description": "River-running playboat with fast hull and slicey ends. Perfect for whitewater fun.",
+    "imageUrl": "https://example.com/images/kayak/antix2-m.jpg",
+    "colors": [
+      {
+        "name": "Sunrise",
+        "hex": "#FFCC33"
+      },
+      {
+        "name": "Cosmos",
+        "hex": "#8A2BE2"
+      }
+    ],
+    "brand": "Jackson Kayak",
+    "category": "Kayaks",
+    "subcategory": "Whitewater",
+    "type": "Watersports",
+    "stockQuantity": 18,
+    "stockLevel": "in-stock",
+    "rating": 4.9,
+    "reviewCount": 89,
+    "popularityScore": 21,
+    "basePrice": 1399.00,
+    "currentPrice": 1399.00,
+    "isOnSale": false,
+    "salePercentage": 0,
+    "searchTerms": [
+      "Kayaks",
+      "Whitewater",
+      "Playboat",
+      "Advanced"
+    ],
+    "listedAt": 1735988400,
+    "updatedAt": 1764846000
+  },
+  {
+    "id": "b0a1b2c3-d4e5-6789-b0a1-b2c3d4e5f678-7",
+    "sku": "WS-KAY-007",
+    "name": "Pelican Argo 100X Sit-On-Top",
+    "slug": "pelican-argo-100x-sit-on-top",
+    "description": "Lightweight, affordable sit-on-top perfect for casual paddlers and rental fleets.",
+    "imageUrl": "https://example.com/images/kayak/argo-100x.jpg",
+    "colors": [
+      {
+        "name": "Blue Fade",
+        "hex": "#5B9BD5"
+      },
+      {
+        "name": "Red Fade",
+        "hex": "#D95D5D"
+      }
+    ],
+    "brand": "Pelican",
+    "category": "Kayaks",
+    "subcategory": "Recreational",
+    "type": "Watersports",
+    "stockQuantity": 124,
+    "stockLevel": "in-stock",
+    "rating": 4.5,
+    "reviewCount": 412,
+    "popularityScore": 15,
+    "basePrice": 449.99,
+    "currentPrice": 399.99,
+    "isOnSale": true,
+    "salePercentage": 11,
+    "searchTerms": [
+      "Kayaks",
+      "Recreational",
+      "Sit-On-Top",
+      "Beginner"
+    ],
+    "listedAt": 1735988400,
+    "updatedAt": 1764846000
+  },
+  {
+    "id": "b0a1b2c3-d4e5-6789-b0a1-b2c3d4e5f678-8",
+    "sku": "WS-KAY-008",
+    "name": "Eddyline Skylark",
+    "slug": "eddyline-skylark",
+    "description": "Lightweight thermoformed recreational kayak that paddles like a touring boat.",
+    "imageUrl": "https://example.com/images/kayak/skylark.jpg",
+    "colors": [
+      {
+        "name": "Red Pearl",
+        "hex": "#C72C48"
+      },
+      {
+        "name": "Sapphire Blue",
+        "hex": "#0F52BA"
+      }
+    ],
+    "brand": "Eddyline",
+    "category": "Kayaks",
+    "subcategory": "Whitewater",
+    "type": "Watersports",
+    "stockQuantity": 22,
+    "stockLevel": "in-stock",
+    "rating": 4.9,
+    "reviewCount": 134,
+    "popularityScore": 2,
+    "basePrice": 1299.00,
+    "currentPrice": 1299.00,
+    "isOnSale": false,
+    "salePercentage": 0,
+    "searchTerms": [
+      "Kayaks",
+      "Whitewater",
+      "Lightweight",
+      "Sit-Inside"
+    ],
+    "listedAt": 1735988400,
+    "updatedAt": 1764846000
+  },
+  {
+    "id": "b0a1b2c3-d4e5-6789-b0a1-b2c3d4e5f678-9",
+    "sku": "WS-KAY-009",
+    "name": "Delta Kayaks Delta 12S",
+    "slug": "delta-kayaks-delta-12s",
+    "description": "Fast and efficient light-touring kayak in stunning thermoform construction.",
+    "imageUrl": "https://example.com/images/kayak/delta-12s.jpg",
+    "colors": [
+      {
+        "name": "Blue/White",
+        "hex": "#AED6F1,#FFFFFF"
+      },
+      {
+        "name": "Yellow/White",
+        "hex": "#FFF8DC,#FFFFFF"
+      }
+    ],
+    "brand": "Delta Kayaks",
+    "category": "Kayaks",
+    "subcategory": "Touring",
+    "type": "Watersports",
+    "stockQuantity": 15,
+    "stockLevel": "in-stock",
+    "rating": 5.0,
+    "reviewCount": 67,
+    "popularityScore": 79,
+    "basePrice": 1895.00,
+    "currentPrice": 1705.50,
+    "isOnSale": true,
+    "salePercentage": 10,
+    "searchTerms": [
+      "Kayaks",
+      "Touring",
+      "Lightweight",
+      "Intermediate"
+    ],
+    "listedAt": 1735988400,
+    "updatedAt": 1764846000
+  },
+  {
+    "id": "b0a1b2c3-d4e5-6789-b0a1-b2c3d4e5f678-10",
+    "sku": "WS-KAY-010",
+    "name": "Ocean Kayak Malibu 9.5",
+    "slug": "ocean-kayak-malibu-95",
+    "description": "Compact, ultra-stable sit-on-top for lakes, bays, and slow rivers.",
+    "imageUrl": "https://example.com/images/kayak/malibu-95.jpg",
+    "colors": [
+      {
+        "name": "Sunrise",
+        "hex": "#FFCC33"
+      },
+      {
+        "name": "Ahi",
+        "hex": "#FF7F50"
+      }
+    ],
+    "brand": "Ocean Kayak",
+    "category": "Kayaks",
+    "subcategory": "Touring",
+    "type": "Watersports",
+    "stockQuantity": 93,
+    "stockLevel": "in-stock",
+    "rating": 4.6,
+    "reviewCount": 298,
+    "popularityScore": 2,
+    "basePrice": 699.99,
+    "currentPrice": 629.99,
+    "isOnSale": true,
+    "salePercentage": 10,
+    "searchTerms": [
+      "Kayaks",
+      "Touring",
+      "Sit-On-Top",
+      "Beginner"
+    ],
+    "listedAt": 1735988400,
+    "updatedAt": 1764846000
+  },
+  {
+    "id": "159384e8-25eb-47d4-b937-629f423dc8f7",
+    "sku": "MTB-001",
+    "name": "Santa Cruz Megatower CC X0 AXS",
+    "slug": "santa-cruz-megatower-cc-x0-axs",
+    "description": "The ultimate 165 mm enduro weapon – lower-link VPP, glovebox storage, size-specific chainstays.",
+    "imageUrl": "https://example.com/images/mtb/megatower-cc.jpg",
+    "colors": [
+      {
+        "name": "Gloss Red",
+        "hex": "#C41E3A"
+      },
+      {
+        "name": "Trans Blue",
+        "hex": "#006994"
+      }
+    ],
+    "brand": "Santa Cruz",
+    "category": "Mountain Bikes",
+    "subcategory": "Enduro",
+    "type": "Biking",
+    "stockQuantity": 18,
+    "stockLevel": "in-stock",
+    "rating": 5.0,
+    "reviewCount": 23,
+    "popularityScore": 1,
+    "basePrice": 10499.00,
+    "currentPrice": 10499.00,
+    "isOnSale": false,
+    "salePercentage": 0,
+    "searchTerms": [
+      "Mountain Bike",
+      "Enduro",
+      "Full Suspension",
+      "Carbon"
+    ],
+    "listedAt": 1735988400,
+    "updatedAt": 1764846000
+  },
+  {
+    "id": "cae28acb-9202-4fda-8547-aeea7aae78c3",
+    "sku": "MTB-002",
+    "name": "Specialized S-Works Enduro SLR",
+    "slug": "specialized-s-works-enduro-slr",
+    "description": "170 mm of pure downhill speed with climbing efficiency – lightest Enduro ever made.",
+    "imageUrl": null,
+    "colors": [
+      {
+        "name": "Satin Sage / Black",
+        "hex": "#8F9779,#000000"
+      }
+    ],
+    "brand": "Specialized",
+    "category": "Mountain Bikes",
+    "subcategory": "Enduro",
+    "type": "Biking",
+    "stockQuantity": 7,
+    "stockLevel": "in-stock",
+    "rating": 5.0,
+    "reviewCount": 38,
+    "popularityScore": 68,
+    "basePrice": 12499.00,
+    "currentPrice": 12499.00,
+    "isOnSale": false,
+    "salePercentage": 0,
+    "searchTerms": [
+      "Mountain Bike",
+      "Enduro",
+      "Full Suspension",
+      "Carbon"
+    ],
+    "listedAt": 1735988400,
+    "updatedAt": 1764846000
+  },
+  {
+    "id": "af4ee99e-f5eb-45ba-8335-7fea97ab512e",
+    "sku": "MTB-003",
+    "name": "Yeti SB160 T4 XX Eagle Transmission",
+    "slug": "yeti-sb160-t4-xx-eagle-transmission",
+    "description": "Turq-series carbon, Switch Infinity, 160 mm race-proven enduro.",
+    "imageUrl": null,
+    "colors": [
+      {
+        "name": "Turquoise",
+        "hex": "#40E0D0"
+      }
+    ],
+    "brand": "Yeti Cycles",
+    "category": "Mountain Bikes",
+    "subcategory": "Enduro",
+    "type": "Biking",
+    "stockQuantity": 9,
+    "stockLevel": "in-stock",
+    "rating": 5.0,
+    "reviewCount": 62,
+    "popularityScore": 19,
+    "basePrice": 11999.00,
+    "currentPrice": 11999.00,
+    "isOnSale": false,
+    "salePercentage": 0,
+    "searchTerms": [
+      "Mountain Bike",
+      "Enduro",
+      "Full Suspension",
+      "Carbon"
+    ],
+    "listedAt": 1735988400,
+    "updatedAt": 1764846000
+  },
+  {
+    "id": "45402318-4847-4306-a784-9ea4099df1d9",
+    "sku": "MTB-005",
+    "name": "Canyon Strive CFR",
+    "slug": "canyon-strive-cfr",
+    "description": "Shapeshifter on-the-fly geometry – 170 mm enduro that climbs like a trail bike.",
+    "imageUrl": null,
+    "colors": [
+      {
+        "name": "Stealth",
+        "hex": "#121212"
+      }
+    ],
+    "brand": "Canyon",
+    "category": "Mountain Bikes",
+    "subcategory": "Enduro",
+    "type": "Biking",
+    "stockQuantity": 28,
+    "stockLevel": "in-stock",
+    "rating": 5.0,
+    "reviewCount": 68,
+    "popularityScore": 28,
+    "basePrice": 7999.00,
+    "currentPrice": 7999.00,
+    "isOnSale": false,
+    "salePercentage": 0,
+    "searchTerms": [
+      "Mountain Bike",
+      "Enduro",
+      "Full Suspension",
+      "Carbon"
+    ],
+    "listedAt": 1735988400,
+    "updatedAt": 1764846000
+  },
+  {
+    "id": "34f5a8ac-dcb6-429e-b851-7d4b73964219",
+    "sku": "MTB-006",
+    "name": "Pivot Firebird Pro X0 Eagle",
+    "slug": "pivot-firebird-pro-x0-eagle",
+    "description": "160 mm dw-link enduro – longest travel 29er with adjustable geometry.",
+    "imageUrl": null,
+    "colors": [
+      {
+        "name": "Gold Metallic",
+        "hex": "#D4AF37"
+      }
+    ],
+    "brand": "Pivot",
+    "category": "Mountain Bikes",
+    "subcategory": "Enduro",
+    "type": "Biking",
+    "stockQuantity": 11,
+    "stockLevel": "in-stock",
+    "rating": 5.0,
+    "reviewCount": 98,
+    "popularityScore": 81,
+    "basePrice": 10999.00,
+    "currentPrice": 10999.00,
+    "isOnSale": false,
+    "salePercentage": 0,
+    "searchTerms": [
+      "Mountain Bike",
+      "Enduro",
+      "Full Suspension",
+      "Carbon"
+    ],
+    "listedAt": 1735988400,
+    "updatedAt": 1764846000
+  },
+  {
+    "id": "7f435ef9-9397-4c02-99fc-2a06ca4a9ff5",
+    "sku": "MTB-007",
+    "name": "Specialized S-Works Epic 8",
+    "slug": "specialized-s-works-epic-8",
+    "description": "The fastest XC full-suspension ever – 120 mm with brain shock.",
+    "imageUrl": null,
+    "colors": [
+      {
+        "name": "Gloss Carbon / Metallic White Silver",
+        "hex": "#111111,#E8E8E8"
+      }
+    ],
+    "brand": "Specialized",
+    "category": "Mountain Bikes",
+    "subcategory": "XC",
+    "type": "Biking",
+    "stockQuantity": 6,
+    "stockLevel": "in-stock",
+    "rating": 5.0,
+    "reviewCount": 73,
+    "popularityScore": 89,
+    "basePrice": 13999.00,
+    "currentPrice": 13999.00,
+    "isOnSale": false,
+    "salePercentage": 0,
+    "searchTerms": [
+      "Mountain Bike",
+      "XC",
+      "Full Suspension",
+      "Carbon"
+    ],
+    "listedAt": 1735988400,
+    "updatedAt": 1764846000
+  },
+  {
+    "id": "7e8bbf79-21f9-44be-a66b-dad517178d10",
+    "sku": "MTB-008",
+    "name": "Scott Spark RC World Cup AXS",
+    "slug": "scott-spark-rc-world-cup-axs",
+    "description": "120 mm XC race rocket – integrated shock, hidden cables.",
+    "imageUrl": null,
+    "colors": [
+      {
+        "name": "Radiant Yellow",
+        "hex": "#FFD700"
+      }
+    ],
+    "brand": "Scott",
+    "category": "Mountain Bikes",
+    "subcategory": "XC",
+    "type": "Biking",
+    "stockQuantity": 12,
+    "stockLevel": "in-stock",
+    "rating": 5.0,
+    "reviewCount": 80,
+    "popularityScore": 44,
+    "basePrice": 11999.00,
+    "currentPrice": 11999.00,
+    "isOnSale": false,
+    "salePercentage": 0,
+    "searchTerms": [
+      "Mountain Bike",
+      "XC",
+      "Full Suspension",
+      "Carbon"
+    ],
+    "listedAt": 1735988400,
+    "updatedAt": 1764846000
+  },
+  {
+    "id": "b44078af-a0a0-47ca-a512-2e4795af1bea",
+    "sku": "MTB-009",
+    "name": "Orbea Oiz M-Team AXS",
+    "slug": "orbea-oiz-m-team-axs",
+    "description": "World Cup XC bike with OMX carbon and 120 mm Squidlock.",
+    "imageUrl": null,
+    "colors": [
+      {
+        "name": "Chameleon Green",
+        "hex": "#7FFFD4"
+      }
+    ],
+    "brand": "Orbea",
+    "category": "Mountain Bikes",
+    "subcategory": "XC",
+    "type": "Biking",
+    "stockQuantity": 15,
+    "stockLevel": "in-stock",
+    "rating": 5.0,
+    "reviewCount": 9,
+    "popularityScore": 88,
+    "basePrice": 9999.00,
+    "currentPrice": 9999.00,
+    "isOnSale": false,
+    "salePercentage": 0,
+    "searchTerms": [
+      "Mountain Bike",
+      "XC",
+      "Full Suspension",
+      "Carbon"
+    ],
+    "listedAt": 1735988400,
+    "updatedAt": 1764846000
+  },
+  {
+    "id": "af6891d7-4f25-4ea3-a119-d40958c82612",
+    "sku": "MTB-010",
+    "name": "Ibis Ripmo V3 SLX",
+    "slug": "ibis-ripmo-v3-slx",
+    "description": "The ultimate 147 mm trail bike – dw-link, 29er, progressive geometry.",
+    "imageUrl": null,
+    "colors": [
+      {
+        "name": "Blue Dream",
+        "hex": "#006994"
+      }
+    ],
+    "brand": "Ibis",
+    "category": "Mountain Bikes",
+    "subcategory": "Trail",
+    "type": "Biking",
+    "stockQuantity": 31,
+    "stockLevel": "in-stock",
+    "rating": 4.9,
+    "reviewCount": 78,
+    "popularityScore": 67,
+    "basePrice": 6999.00,
+    "currentPrice": 6299.00,
+    "isOnSale": true,
+    "salePercentage": 0,
+    "searchTerms": [
+      "Mountain Bike",
+      "Trail",
+      "Full Suspension",
+      "Carbon"
+    ],
+    "listedAt": 1735988400,
+    "updatedAt": 1764846000
+  },
+  {
+    "id": "8004b071-b781-454c-9d0c-f4457d780b9d",
+    "sku": "MTB-011",
+    "name": "Transition Spire Carbon X0",
+    "slug": "transition-spire-carbon-x0",
+    "description": "160 mm 29er enduro – GiddyUp suspension, party in the woods.",
+    "imageUrl": null,
+    "colors": [
+      {
+        "name": "Huckleberry",
+        "hex": "#800080"
+      }
+    ],
+    "brand": "Transition",
+    "category": "Mountain Bikes",
+    "subcategory": "Enduro",
+    "type": "Biking",
+    "stockQuantity": 19,
+    "stockLevel": "in-stock",
+    "rating": 4.9,
+    "reviewCount": 92,
+    "popularityScore": 84,
+    "basePrice": 8999.00,
+    "currentPrice": 8999.00,
+    "isOnSale": false,
+    "salePercentage": 0,
+    "searchTerms": [
+      "Mountain Bike",
+      "Enduro",
+      "Full Suspension",
+      "Carbon"
+    ],
+    "listedAt": 1735988400,
+    "updatedAt": 1764846000
+  },
+  {
+    "id": "35522077-dfb6-4269-8df9-40effd914850",
+    "sku": "MTB-012",
+    "name": "Norco Sight C1",
+    "slug": "norco-sight-c1",
+    "description": "150 mm all-mountain carbon – high-pivot, idler, size-specific tuning.",
+    "imageUrl": null,
+    "colors": [
+      {
+        "name": "Orange / Charcoal",
+        "hex": "#FF6A00,#333333"
+      }
+    ],
+    "brand": "Norco",
+    "category": "Mountain Bikes",
+    "subcategory": "Trail",
+    "type": "Biking",
+    "stockQuantity": 25,
+    "stockLevel": "in-stock",
+    "rating": 4.9,
+    "reviewCount": 38,
+    "popularityScore": 50,
+    "basePrice": 7999.00,
+    "currentPrice": 7999.00,
+    "isOnSale": false,
+    "salePercentage": 0,
+    "searchTerms": [
+      "Mountain Bike",
+      "Trail",
+      "Full Suspension",
+      "Carbon"
+    ],
+    "listedAt": 1735988400,
+    "updatedAt": 1764846000
+  },
+  {
+    "id": "46c8b73a-5946-49f7-9054-135bb3c024f9",
+    "sku": "MTB-013",
+    "name": "Commencal Meta Power SX Signature",
+    "slug": "commencal-meta-power-sx-signature",
+    "description": "Bosch SX powered e-enduro – 160 mm, 400 Wh, mullet wheels.",
+    "imageUrl": null,
+    "colors": [
+      {
+        "name": "Champagne Gold",
+        "hex": "#E8C474"
+      }
+    ],
+    "brand": "Commencal",
+    "category": "Mountain Bikes",
+    "subcategory": "Enduro",
+    "type": "Biking",
+    "stockQuantity": 16,
+    "stockLevel": "in-stock",
+    "rating": 5.0,
+    "reviewCount": 100,
+    "popularityScore": 76,
+    "basePrice": 8999.00,
+    "currentPrice": 8999.00,
+    "isOnSale": false,
+    "salePercentage": 0,
+    "searchTerms": [
+      "Mountain Bike",
+      "E-MTB",
+      "Enduro",
+      "Full Suspension"
+    ],
+    "listedAt": 1735988400,
+    "updatedAt": 1764846000
+  },
+  {
+    "id": "9225aeeb-4fe9-46bb-942e-1ce8e6fb8104",
+    "sku": "MTB-014",
+    "name": "Specialized S-Works Turbo Levo SL",
+    "slug": "specialized-s-works-turbo-levo-sl",
+    "description": "The lightest e-MTB in its class – 17.3 kg, 320 Wh, 150 mm.",
+    "imageUrl": null,
+    "colors": [
+      {
+        "name": "Vivid Red / Black",
+        "hex": "#C41E3A,#000000"
+      }
+    ],
+    "brand": "Specialized",
+    "category": "Mountain Bikes",
+    "subcategory": "Trail",
+    "type": "Biking",
+    "stockQuantity": 8,
+    "stockLevel": "in-stock",
+    "rating": 5.0,
+    "reviewCount": 80,
+    "popularityScore": 82,
+    "basePrice": 13999.00,
+    "currentPrice": 13999.00,
+    "isOnSale": false,
+    "salePercentage": 0,
+    "searchTerms": [
+      "Mountain Bike",
+      "E-MTB",
+      "Trail",
+      "Carbon"
+    ],
+    "listedAt": 1735988400,
+    "updatedAt": 1764846000
+  },
+  {
+    "id": "4a880af4-390a-4971-bc4a-780b56cf7ead",
+    "sku": "MTB-015",
+    "name": "YT Decoy Core 4 MX",
+    "slug": "yt-decoy-core-4-mx",
+    "description": "Bosch CX powered mullet enduro – 170 mm travel, 600 Wh.",
+    "imageUrl": null,
+    "colors": [
+      {
+        "name": "Liquid Metal Blue",
+        "hex": "#006994"
+      }
+    ],
+    "brand": "YT Industries",
+    "category": "Mountain Bikes",
+    "subcategory": "Enduro",
+    "type": "Biking",
+    "stockQuantity": 33,
+    "stockLevel": "in-stock",
+    "rating": 4.9,
+    "reviewCount": 70,
+    "popularityScore": 95,
+    "basePrice": 7499.00,
+    "currentPrice": 7499.00,
+    "isOnSale": false,
+    "salePercentage": 0,
+    "searchTerms": [
+      "Mountain Bike",
+      "E-MTB",
+      "Enduro",
+      "Alloy"
+    ],
+    "listedAt": 1735988400,
+    "updatedAt": 1764846000
+  },
+  {
+    "id": "c2b8b7a1-3b8c-488a-8a90-8c5619ae7458",
+    "sku": "MTB-016",
+    "name": "Forbidden Druid V2 XT",
+    "slug": "forbidden-druid-v2-xt",
+    "description": "High-pivot 130 mm trail bike – incredible traction and plushness.",
+    "imageUrl": null,
+    "colors": [
+      {
+        "name": "Lilac",
+        "hex": "#C8A2C8"
+      }
+    ],
+    "brand": "Forbidden",
+    "category": "Mountain Bikes",
+    "subcategory": "Trail",
+    "type": "Biking",
+    "stockQuantity": 21,
+    "stockLevel": "in-stock",
+    "rating": 5.0,
+    "reviewCount": 87,
+    "popularityScore": 5,
+    "basePrice": 7499.00,
+    "currentPrice": 7499.00,
+    "isOnSale": false,
+    "salePercentage": 0,
+    "searchTerms": [
+      "Mountain Bike",
+      "Trail",
+      "Full Suspension",
+      "Carbon"
+    ],
+    "listedAt": 1735988400,
+    "updatedAt": 1764846000
+  },
+  {
+    "id": "120d1db6-f7c4-4022-bc1b-d187291ebf14",
+    "sku": "MTB-017",
+    "name": "Atherton S.150.1 Works",
+    "slug": "atherton-s-150-1-works",
+    "description": "3D-printed lugged carbon – Dyname 4.0 powered e-enduro.",
+    "imageUrl": null,
+    "colors": [
+      {
+        "name": "Raw Carbon",
+        "hex": "#222222"
+      }
+    ],
+    "brand": "Atherton Bikes",
+    "category": "Mountain Bikes",
+    "subcategory": "Enduro",
+    "type": "Biking",
+    "stockQuantity": 4,
+    "stockLevel": "in-stock",
+    "rating": 5.0,
+    "reviewCount": 33,
+    "popularityScore": 81,
+    "basePrice": 14999.00,
+    "currentPrice": 14999.00,
+    "isOnSale": false,
+    "salePercentage": 0,
+    "searchTerms": [
+      "Mountain Bike",
+      "E-MTB",
+      "Enduro",
+      "Carbon"
+    ],
+    "listedAt": 1735988400,
+    "updatedAt": 1764846000
+  },
+  {
+    "id": "9b095aa1-489b-40bd-bd06-15d34ce96b71",
+    "sku": "MTB-018",
+    "name": "Niner RIP 9 RDO 29 XT",
+    "slug": "niner-rip-9-rdo-29-xt",
+    "description": "140 mm 29er trail bike with CVA suspension.",
+    "imageUrl": null,
+    "colors": [
+      {
+        "name": "Emerald Green",
+        "hex": "#046307"
+      }
+    ],
+    "brand": "Niner",
+    "category": "Mountain Bikes",
+    "subcategory": "Trail",
+    "type": "Biking",
+    "stockQuantity": 27,
+    "stockLevel": "in-stock",
+    "rating": 4.9,
+    "reviewCount": 55,
+    "popularityScore": 63,
+    "basePrice": 6999.00,
+    "currentPrice": 6299.00,
+    "isOnSale": true,
+    "salePercentage": 0,
+    "searchTerms": [
+      "Mountain Bike",
+      "Trail",
+      "Full Suspension",
+      "Carbon"
+    ],
+    "listedAt": 1735988400,
+    "updatedAt": 1764846000
+  },
+  {
+    "id": "9b4c148c-64d8-43fb-b2b3-1978c0bf971b",
+    "sku": "MTB-019",
+    "name": "Evil Following LS GX",
+    "slug": "evil-following-ls-gx",
+    "description": "120 mm 29er trail ripper – DELTA linkage, playful as hell.",
+    "imageUrl": null,
+    "colors": [
+      {
+        "name": "Baja Tan",
+        "hex": "#D2B48C"
+      }
+    ],
+    "brand": "Evil",
+    "category": "Mountain Bikes",
+    "subcategory": "Trail",
+    "type": "Biking",
+    "stockQuantity": 23,
+    "stockLevel": "in-stock",
+    "rating": 5.0,
+    "reviewCount": 70,
+    "popularityScore": 91,
+    "basePrice": 7499.00,
+    "currentPrice": 7499.00,
+    "isOnSale": false,
+    "salePercentage": 0,
+    "searchTerms": [
+      "Mountain Bike",
+      "Trail",
+      "Full Suspension",
+      "Carbon"
+    ],
+    "listedAt": 1735988400,
+    "updatedAt": 1764846000
+  },
+  {
+    "id": "fcabc051-ec41-490d-9af0-6d9f74eab1fd",
+    "sku": "MTB-020",
+    "name": "Pole Voima K2 Bosch CX Race",
+    "slug": "pole-voima-k2-bosch-cx-race",
+    "description": "Finnish CNC-machined alloy e-enduro – 190 mm travel, 750 Wh.",
+    "imageUrl": null,
+    "colors": [
+      {
+        "name": "Raw Machined",
+        "hex": "#B0BEC5"
+      }
+    ],
+    "brand": "Pole",
+    "category": "Mountain Bikes",
+    "subcategory": "Enduro",
+    "type": "Biking",
+    "stockQuantity": 10,
+    "stockLevel": "in-stock",
+    "rating": 5.0,
+    "reviewCount": 98,
+    "popularityScore": 9,
+    "basePrice": 10999.00,
+    "currentPrice": 10999.00,
+    "isOnSale": false,
+    "salePercentage": 0,
+    "searchTerms": [
+      "Mountain Bike",
+      "E-MTB",
+      "Enduro",
+      "Alloy"
+    ],
+    "listedAt": 1735988400,
+    "updatedAt": 1764846000
+  }
+]
