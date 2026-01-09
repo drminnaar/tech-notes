@@ -24,4 +24,6 @@ This section provides a collection of quickstart guides to get up and running wi
 
 - [Postgres](./postgres)
 
+- [Typesense](./typesense)
+
 ---
