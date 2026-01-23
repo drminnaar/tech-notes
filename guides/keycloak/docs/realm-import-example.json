@@ -1,0 +1,106 @@
+{
+  "realm": "myrealm",
+  "enabled": true,
+  "displayName": "My Realm",
+  "sslRequired": "external",
+  "registrationAllowed": false,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": true,
+  "editUsernameAllowed": false,
+  "bruteForceProtected": true,
+  
+  "roles": {
+    "realm": [
+      {
+        "name": "user",
+        "description": "User role"
+      }
+    ],
+    "client": {
+      "myclient": [
+        {
+          "name": "admin",
+          "description": "Admin role for myclient"
+        }
+      ]
+    }
+  },
+  
+  "groups": [
+    {
+      "name": "Administrators",
+      "path": "/Administrators",
+      "realmRoles": ["admin"]
+    }
+  ],
+  
+  "users": [
+    {
+      "username": "testuser",
+      "enabled": true,
+      "email": "test@example.com",
+      "emailVerified": true,
+      "firstName": "Test",
+      "lastName": "User",
+      "realmRoles": ["user"],
+      "clientRoles": {
+        "myclient": ["admin"]
+      },
+      "groups": ["/Administrators"],
+      "credentials": [
+        {
+          "type": "password",
+          "value": "password123",
+          "temporary": false
+        }
+      ]
+    }
+  ],
+  
+  "clients": [
+    {
+      "clientId": "myclient",
+      "name": "My Client",
+      "enabled": true,
+      "publicClient": true,
+      "protocol": "openid-connect",
+      "redirectUris": ["http://localhost:3000/*"],
+      "webOrigins": ["+"],
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": true
+    }
+  ],
+  
+  "clientScopes": [
+    {
+      "name": "custom-scope",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "true"
+      }
+    }
+  ],
+  
+  "identityProviders": [
+    {
+      "alias": "google",
+      "providerId": "google",
+      "enabled": true,
+      "config": {
+        "clientId": "YOUR_CLIENT_ID",
+        "clientSecret": "YOUR_SECRET"
+      }
+    }
+  ],
+  
+  "smtpServer": {
+    "host": "smtp.example.com",
+    "port": "587",
+    "from": "noreply@example.com",
+    "auth": "true",
+    "user": "smtp-user",
+    "password": "smtp-password"
+  }
+}

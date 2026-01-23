@@ -1,0 +1,135 @@
+{
+  "realm": "lab",
+  "displayName": "Lab Realm",
+  "enabled": true,
+  "sslRequired": "external",
+  "registrationAllowed": false,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": true,
+  "editUsernameAllowed": false,
+  "bruteForceProtected": true,
+  "clients": [
+    {
+      "clientId": "keycloak-spa",
+      "name": "Keycloak SPA",
+      "description": "SPA testing application provided by Keycloak",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "clientAuthenticatorType": "none",
+      "redirectUris": [
+        "https://www.keycloak.org/app/*"
+      ],
+      "webOrigins": [
+        "https://www.keycloak.org"
+      ],
+      "notBefore": 0,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": false,
+      "publicClient": true,
+      "frontchannelLogout": true,
+      "attributes": {
+        "access.token.lifespan": "900",
+        "realm_client": "false",
+        "oidc.ciba.grant.enabled": "false",
+        "backchannel.logout.session.required": "true",
+        "standard.token.exchange.enabled": "false",
+        "oauth2.device.authorization.grant.enabled": "false",
+        "backchannel.logout.revoke.offline.tokens": "false",
+        "dpop.bound.access.tokens": "false"
+      },
+      "fullScopeAllowed": true,
+      "defaultClientScopes": [
+        "web-origins",
+        "acr",
+        "roles",
+        "profile",
+        "basic",
+        "email"
+      ],
+      "optionalClientScopes": [
+        "address",
+        "phone",
+        "organization",
+        "offline_access",
+        "microprofile-jwt"
+      ]
+    },
+    {
+      "clientId": "http-client",
+      "name": "HTTP Client",
+      "description": "Confidential client for testing auth using various http clients like curl, postman, insomnia etc",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "clientAuthenticatorType": "client-secret",
+      "secret": "secret",
+      "publicClient": false,
+      "standardFlowEnabled": false,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": false,
+      "authorizationServicesEnabled": false,
+      "attributes": {
+        "access.token.lifespan": "900",
+        "saml.assertion.signature": "false",
+        "exclude.session.state.from.auth.response": "false",
+        "saml.force.post.binding": "false",
+        "frontchannel.logout": "false",
+        "saml.client.signature": "false",
+        "saml.encrypt": "false",
+        "saml.authnstatement": "false",
+        "tls.client.certificate.bound.access.tokens": "false",
+        "saml.server.signature": "false",
+        "saml.assertion.encryption": "false",
+        "display.on.consent.screen": "false",
+        "use.refresh.tokens": "true"
+      },
+      "defaultClientScopes": [
+        "web-origins",
+        "acr",
+        "roles",
+        "profile",
+        "basic",
+        "email"
+      ],
+      "optionalClientScopes": [
+        "address",
+        "phone",
+        "organization",
+        "offline_access",
+        "microprofile-jwt"
+      ]
+    }
+  ],
+  "users": [
+    {
+      "username": "testuser",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Test",
+      "lastName": "User",
+      "email": "testuser@example.com",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "password",
+          "temporary": false
+        }
+      ]
+    }
+  ],
+  "defaultDefaultClientScopes": [
+    "roles",
+    "profile",
+    "email"
+  ],
+  "defaultOptionalClientScopes": [
+    "address",
+    "phone",
+    "organization",
+    "offline_access",
+    "microprofile-jwt"
+  ]
+}

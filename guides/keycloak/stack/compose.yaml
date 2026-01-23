@@ -1,0 +1,62 @@
+name: keycloak-stack
+
+networks:
+  default:
+    name: keycloak
+
+# Key Explanations:
+# - `start-dev`: Optimized for local dev (features like auto-user registration enabled).
+# - `--import-realm`: Tells Keycloak to scan the import directory and load JSON files on startup. It only imports if the realm doesn't exist (avoids duplicates).
+# - The import path (`/opt/keycloak/data/import/`) is the standard directory Keycloak checks in containerized setups.
+# - No database needed for simple dev; it uses an in-memory H2 DB by default.
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.4
+    container_name: keycloak
+    command: start-dev --import-realm
+    environment:
+      - KC_HEALTH_ENABLED=true
+      - KC_HOSTNAME_STRICT=false
+      - KC_HOSTNAME_STRICT_HTTPS=false
+      - KC_BOOTSTRAP_ADMIN_USERNAME=${LAB_KC_BOOTSTRAP_ADMIN_USERNAME}
+      - KC_BOOTSTRAP_ADMIN_PASSWORD=${LAB_KC_BOOTSTRAP_ADMIN_PASSWORD}
+    ports:
+      - "8080:8080"
+    networks:
+      - default
+    volumes:
+      - ./realms:/opt/keycloak/data/import:ro
+    restart: unless-stopped
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "/opt/keycloak/bin/kcadm.sh",
+          "config",
+          "credentials",
+          "--server",
+          "http://keycloak:8080",
+          "--realm",
+          "master",
+          "--user",
+          "${OG_KC_BOOTSTRAP_ADMIN_USERNAME}",
+          "--password",
+          "${OG_KC_BOOTSTRAP_ADMIN_PASSWORD}",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 90s
+
+  # NOTE: uncomment below to run setup.sh script on initialization.
+  #       The setup.sh script will create a realm, a user and set password
+  #       Remember to set execute permission on setup.sh -> chmod +x ./setup.sh
+  # keycloak-config:
+  #   image: quay.io/keycloak/keycloak:26.4
+  #   container_name: keycloak-config
+  #   depends_on:
+  #     keycloak:
+  #       condition: service_healthy
+  #   volumes:
+  #     - ./setup.sh:/opt/setup.sh
+  #   entrypoint: ["/bin/bash", "/opt/setup.sh"]

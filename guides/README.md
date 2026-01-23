@@ -17,6 +17,8 @@ This section provides a collection of quickstart guides to get up and running wi
 - [Flink](./flink)
 
 - [Kafka](./kafka)
+- 
+- [Keycloak](./keycloak)
 
 - [Mongo](./mongodb)
 

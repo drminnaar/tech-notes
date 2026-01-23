@@ -1,0 +1,32 @@
+@client_id=http-client
+@username=testuser
+@password=password
+@client_secret=secret
+@token_url=http://localhost:8080/realms/lab/protocol/openid-connect/token
+
+###  1. Password Grant (Resource Owner Password Credentials)
+
+# @name login
+
+POST {{token_url}}
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password
+&password={{password}}
+&username={{username}}
+&client_id={{client_id}}
+&client_secret={{client_secret}}
+
+###
+
+@refresh_token={{login.response.body.refresh_token}}
+
+###  2. Refresh Token Grant
+
+POST {{token_url}}
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=refresh_token
+&client_id={{client_id}}
+&client_secret={{client_secret}}
+&refresh_token={{refresh_token}}
