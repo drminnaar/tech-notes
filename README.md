@@ -20,19 +20,14 @@ This project represents a personal knowledge base for documenting my learning jo
   
   This section provides a collection of quickstart guides to get up and running with various technology stacks like Mongo DB, Cassandra DB, Posgres, etc.
 
-  - [Cassandra](./cassandra)
-  
-  - [Flink](./flink)
-  
-  - [Kafka](./kafka)
-  
-  - [Mongo](./mongodb)
-  
-  - [MSSQL](./mssql)
-  
-  - [Postgres](./postgres)
-  
-  - [Typesense](./typesense)
+  - [Cassandra](./guides/cassandra)  
+  - [Flink](./guides/flink)  
+  - [Kafka](./guides/kafka)  
+  - [Keycloak](./guides/keycloak)
+  - [Mongo](./guides/mongodb)  
+  - [MSSQL](./guides/mssql)  
+  - [Postgres](./guides/postgres)  
+  - [Typesense](./guides/typesense)
 
 - [Kubernetes](./kubernetes)
 
