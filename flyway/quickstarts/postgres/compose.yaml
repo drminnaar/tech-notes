@@ -6,7 +6,7 @@ volumes:
 
 networks:
   default:
-    name: cassandra
+    name: pg_network
 
 services:
   postgres:
@@ -32,10 +32,10 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '1.0'
+          cpus: "1.0"
           memory: 1G
         reservations:
-          cpus: '0.25'
+          cpus: "0.25"
           memory: 512M
 
   postgres-client:
@@ -53,26 +53,26 @@ services:
     # Keep container running idly for exec access
     command: ["tail", "-f", "/dev/null"]
 
-# -------------------------------------------------------------------------------------------------
-# Flyway Services
-# -------------------------------------------------------------------------------------------------
+  # -------------------------------------------------------------------------------------------------
+  # Flyway Services
+  # -------------------------------------------------------------------------------------------------
   flyway:
-      profiles: ["flyway"]
-      container_name: flyway
-      image: flyway/flyway:11-alpine
-      entrypoint: /bin/sh
-      command: -c "flyway info"
-      environment:
-        - FLYWAY_URL=jdbc:postgresql://postgres/${LAB_POSTGRES_DB}
-        - FLYWAY_LOCATIONS=filesystem:/flyway/sql
-        - FLYWAY_SQL_MIGRATION_SUFFIXES=.sql
-        - FLYWAY_USER=${LAB_POSTGRES_USER}
-        - FLYWAY_PASSWORD=${LAB_POSTGRES_PASSWORD}
-        - FLYWAY_SCHEMAS=migrations,operations,music_catalog,sales
-        - FLYWAY_DEFAULT_SCHEMA=migrations
-        - FLYWAY_CONNECT_RETRIES=10
-        - FLYWAY_CLEAN_DISABLED=false
-      volumes:
-        - ./migrations:/flyway/sql
-      networks:
-        - default
+    profiles: ["flyway"]
+    container_name: flyway
+    image: flyway/flyway:11-alpine
+    entrypoint: /bin/sh
+    command: -c "flyway info"
+    environment:
+      - FLYWAY_URL=jdbc:postgresql://postgres/${LAB_POSTGRES_DB}
+      - FLYWAY_LOCATIONS=filesystem:/flyway/sql
+      - FLYWAY_SQL_MIGRATION_SUFFIXES=.sql
+      - FLYWAY_USER=${LAB_POSTGRES_USER}
+      - FLYWAY_PASSWORD=${LAB_POSTGRES_PASSWORD}
+      - FLYWAY_SCHEMAS=migrations,operations,music_catalog,sales
+      - FLYWAY_DEFAULT_SCHEMA=migrations
+      - FLYWAY_CONNECT_RETRIES=10
+      - FLYWAY_CLEAN_DISABLED=false
+    volumes:
+      - ./migrations:/flyway/sql
+    networks:
+      - default
