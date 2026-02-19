@@ -24,6 +24,10 @@ This project represents a personal knowledge base for documenting my learning jo
   
   A curated compilation of various git guides that cover setup, common commands, and git commit convention.
 
+- [Temporal](/detailed-guides/temporal)
+
+  Technical documentation and practical examples for [Temporal](https://temporal.io/), a durable execution engine. This section is designed for Developers and Architects, offering insights into Temporal's core concepts, patterns, and real-world usage.
+
 ---
 
 ## ⚡ Quickstart Guides
@@ -39,6 +43,7 @@ This project represents a personal knowledge base for documenting my learning jo
   - [Mongo](./quickstart-guides/mongodb)  
   - [MSSQL](./quickstart-guides/mssql)  
   - [Postgres](./quickstart-guides/postgres)  
+  - [Temporal](./quickstart-guides/temporal)
   - [Typesense](./quickstart-guides/typesense)
   - [Windows Subsystem for Linux](./wsl)
 
