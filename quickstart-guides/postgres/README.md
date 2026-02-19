@@ -1,6 +1,6 @@
 # 🗺️ Postgres Guide
 
-This quickstart demonstrates how to use Flyway with Postgres for database schema migrations. It provides a complete setup with Docker Compose, migration scripts, and a convenient runner script.
+This quickstart guide provides resources and examples for running Postgresql locally using Docker Compose.
 
 ---
 
