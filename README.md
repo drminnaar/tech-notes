@@ -1,4 +1,4 @@
-![](https://github.com/user-attachments/assets/82930359-4f98-4ff5-aefb-64f83389eb56)
+![](https://github.com/user-attachments/assets/0fcbfeb8-5046-49fc-b23e-8ed40a2ffeb3)
 
 # Tech Notes README
 
@@ -27,6 +27,10 @@ This project represents a personal knowledge base for documenting my learning jo
 - [Temporal](/detailed-guides/temporal)
 
   Technical documentation and practical examples for [Temporal](https://temporal.io/), a durable execution engine. This section is designed for Developers and Architects, offering insights into Temporal's core concepts, patterns, and real-world usage.
+
+- [RabbitMQ with .NET10](https://github.com/drminnaar/dotnet-rabbitmq)
+  
+  A comprehensive guide to integrating RabbitMQ with .NET 10, including setup instructions, code samples, and best practices for building robust messaging solutions. This section is tailored for Developers and Architects seeking practical insights and real-world examples.
 
 ---
 
