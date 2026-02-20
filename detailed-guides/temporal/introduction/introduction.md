@@ -1,15 +1,5 @@
 # Temporal - Introduction
 
-In this chapter, you will work toward the goal of being able to configure an environment for developing Temporal Applications.
-
-Specifically, by the end of this chapter, you will:
-
-- Find Temporal’s documentation and code samples
-- Run a Temporal Service for development use
-- Install a Temporal SDK
-- Install the temporal CLI
-- Understand the different options for running Temporal in production
-
 ## 🌟 Overview
 
 > [!IMPORTANT]
