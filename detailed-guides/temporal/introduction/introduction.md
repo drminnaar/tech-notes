@@ -15,8 +15,9 @@ Specifically, by the end of this chapter, you will:
 > [!IMPORTANT]
 > &nbsp;  
 > ☝️🤓 Temporal is not just a "workflow engine", It's a Durable Execution Platform.
+> Think of Temporal as a "fault-tolerant sidekick" for your code. It ensures that your application logic runs to completion, regardless of network reliability, server crashes, or even months-long wait times.
 > &nbsp;  
-> &nbsp;
+> &nbsp;  
 
 Temporal is an **open-source durable execution platform**. This means once your code starts running, the system guarantees it will eventually finish, even if processes crash, machines die, or deployments happen in between. It is designed to make building reliable, fault-tolerant applications easier. In typical distributed systems, if a server crashes or a network call fails, there would need to be sophisticated mechanisms/code in place to help ensure resiliency. For example, state machines, message queues, and database records. Temporal abstracts all that complexity away, thereby  allowing one to write code in a way that handles errors more reliable and seamless way. Code can be written in languages like Go, TypeScript/JavaScript, Python, Java, PHP, .NET, etc.
 
