@@ -16,8 +16,10 @@
         ]
       },
       "linux": {
-        "command": "${workspaceFolder}/infra/local/scripts/compose.sh",
+        "command": "docker compose",
         "args": [
+          "--file",
+          "${workspaceFolder}/quickstart-guides/temporal/compose.yml",
           "up"
         ]
       },
@@ -31,6 +33,41 @@
       },
       "icon": {
         "id": "play-circle",
+        "color": "terminal.ansiMagenta"
+      }
+    },
+    // ------------------------------------------------------------------------
+    // SQLite3 - Example 2 Customers Database
+    // ------------------------------------------------------------------------
+    {
+      "label": "sqlite3: open temporal example2 customers database",
+      "type": "shell",
+      "problemMatcher": [],
+      "windows": {
+        "command": "C:/Program Files/Git/bin/bash.exe",
+        "args": [
+          "-c",
+          "sqlite3 -header -column ./detailed-guides/temporal/examples/example-2/Example2.Worker/customers.db"
+        ]
+      },
+      "linux": {
+        "command": "sqlite3",
+        "args": [
+          "-header",
+          "-column",
+          "${workspaceFolder}/detailed-guides/temporal/examples/example-2/Example2.Worker/customers.db"
+        ]
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      },
+      "icon": {
+        "id": "database",
         "color": "terminal.ansiMagenta"
       }
     },

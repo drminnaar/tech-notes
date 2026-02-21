@@ -1,0 +1,51 @@
+@host_address=http://localhost:5100
+@customer_id_1=00000000-0000-0000-0000-000000000001
+@customer_id_2=00000000-0000-0000-0000-000000000002
+@customer_id_3=00000000-0000-0000-0000-000000000003
+
+GET {{host_address}}/
+Accept: application/json
+
+
+###
+
+
+### Submit a suspension (Suspend) or reinstatement (Reinstate)  request
+# @name submitCustomerAction
+
+POST {{host_address}}/customer-actions
+Content-Type: application/json
+Accept: application/json
+
+{
+  "customerId": "00000000-0000-0000-0000-000000000001",
+  "actionType": "Suspend",
+  "reason": "Missed payment",
+  "requestedBy": "operator1"
+}
+
+
+###
+@workflow_id={{submitCustomerAction.response.body.workflowId}}
+
+
+### Get the current state of a customer action workflow
+GET {{host_address}}/customer-actions/{{workflow_id}}/state
+Accept: application/json
+
+
+### Approve or reject a pending customer action
+POST {{host_address}}/customer-actions/{{workflow_id}}/approve
+Content-Type: application/json
+Accept: application/json
+
+{
+  "approved": true,
+  "reviewedBy": "manager1",
+  "reviewNotes": "All criteria met."
+}
+
+
+### Cancel a pending customer action request
+DELETE {{host_address}}/customer-actions/{{workflow_id}}
+Accept: application/json

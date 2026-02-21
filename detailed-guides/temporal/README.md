@@ -22,4 +22,8 @@ All examples can be found at [./examples/](./examples/).
   
   A simple workflow demonstrating Temporal's basic functionality. The "Hello World" example shows how to define a workflow, and execute it using Temporal's SDK. It serves as an introduction to Temporal's programming model and workflow execution.
 
+- ✨ [Example 2 - Suspend/Reinstate Customer](./examples/example-2/)
+  
+  A .NET 10 / C# 14 solution demonstrating a **manager-approval workflow** for customer suspension and reinstatement. Instead of a backoffice operator's request going straight to the database, it enters a durable workflow where a manager must approve or reject it within 48 hours. The workflow survives worker restarts, handles timeouts gracefully, and provides full auditability via Temporal's event history.
+
 ---
