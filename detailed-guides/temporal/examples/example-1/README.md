@@ -76,7 +76,7 @@ This will start run the `docker compose: temporal-service up` that is defined in
 
 ```pwsh
 # 🖥️ open terminal at ./example-1/
-dotnet run --project ./Example.Worker
+dotnet run --project ./Example1.Worker
 
 ```
 

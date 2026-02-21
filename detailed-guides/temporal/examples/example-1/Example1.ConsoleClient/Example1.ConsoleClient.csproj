@@ -13,4 +13,8 @@
         <ProjectReference Include="..\Example1.Shared\Example1.Shared.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+        <PackageReference Include="Temporalio" Version="1.11.1" />
+    </ItemGroup>
+
 </Project>
