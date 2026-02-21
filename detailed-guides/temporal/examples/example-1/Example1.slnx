@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="Example1.ConsoleClient/Example1.ConsoleClient.csproj" />
+  <Project Path="Example1.Shared/Example1.Shared.csproj" />
+  <Project Path="Example1.Worker/Example1.Worker.csproj" />
+</Solution>

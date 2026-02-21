@@ -14,4 +14,12 @@ See [🚀 /quickstart-guides/temporal/](/quickstart-guides/temporal/) for a guid
   
   A detailed explanation of Temporal's architecture, including its components, data flow, and how it achieves durability, scalability, and fault tolerance.
 
+## Examples
+
+All examples can be found at [./examples/](./examples/).
+
+- ✨ [Example 1 - Hello World](./examples/example-1/)
+  
+  A simple workflow demonstrating Temporal's basic functionality. The "Hello World" example shows how to define a workflow, and execute it using Temporal's SDK. It serves as an introduction to Temporal's programming model and workflow execution.
+
 ---

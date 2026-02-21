@@ -1,0 +1,38 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    // ------------------------------------------------------------------------
+    // Temporal Service
+    // ------------------------------------------------------------------------
+    {
+      "label": "docker compose: temporal-service up",
+      "type": "shell",
+      "problemMatcher": [],
+      "windows": {
+        "command": "C:/Program Files/Git/bin/bash.exe",
+        "args": [
+          "-c",
+          "docker compose --file ./quickstart-guides/temporal/compose.yml up"
+        ]
+      },
+      "linux": {
+        "command": "${workspaceFolder}/infra/local/scripts/compose.sh",
+        "args": [
+          "up"
+        ]
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      },
+      "icon": {
+        "id": "play-circle",
+        "color": "terminal.ansiMagenta"
+      }
+    },
+  ]
+}
