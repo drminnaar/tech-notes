@@ -1,4 +1,4 @@
-![](https://github.com/user-attachments/assets/0fcbfeb8-5046-49fc-b23e-8ed40a2ffeb3)
+![](https://github.com/user-attachments/assets/8ccf7a62-44e5-4e02-b53c-f28ff056cf80)
 
 # Tech Notes README
 
@@ -10,11 +10,11 @@ This project represents a personal knowledge base for documenting my learning jo
 
 - [Apache Cassandra](./detailed-guides/cassandra/)
   
-  Technical documentation and examples covering various aspects of Apache Cassandra. Written for Developers, Database Admins, and Architects, this section offers both a thoeretical and practical approach to learning and understanding Cassandra.
+  Technical documentation and examples covering various aspects of Apache Cassandra. Written for Developers, Database Admins, and Architects, this section offers both a theoretical and practical approach to learning and understanding Cassandra.
 
 - [Kubernetes](./detailed-guides/kubernetes)
 
-  A journey into the foundational features, patterns and practices of Kubernetes. Written for Developers, DevOps Engineers, and Architects, this section offers both a thoeretical and practical approach to learning and understanding Kubernetes.
+  A journey into the foundational features, patterns and practices of Kubernetes. Written for Developers, DevOps Engineers, and Architects, this section offers both a theoretical and practical approach to learning and understanding Kubernetes.
 
 - [RedGate Flyway](./detailed-guides/flyway)
   
@@ -31,6 +31,10 @@ This project represents a personal knowledge base for documenting my learning jo
 - [RabbitMQ with .NET10](https://github.com/drminnaar/dotnet-rabbitmq)
   
   A comprehensive guide to integrating RabbitMQ with .NET 10, including setup instructions, code samples, and best practices for building robust messaging solutions. This section is tailored for Developers and Architects seeking practical insights and real-world examples.
+
+- [Model Context Protocol (MCP)](./detailed-guides/mcp)
+  
+  An in-depth exploration of the Model Context Protocol (MCP), an open standard for connecting AI applications to external systems. This section provides a comprehensive introduction to MCP, its core concepts, and practical examples for developers and architects looking to leverage MCP in their AI integrations.
 
 ---
 
