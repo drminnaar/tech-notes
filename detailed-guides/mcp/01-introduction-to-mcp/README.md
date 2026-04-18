@@ -1,7 +1,9 @@
 # Introduction to the Model Context Protocol (MCP)
 
-> [!NOTE] TL;DR:
-> MCP is like USB-C for AI — a single, open standard that lets AI applications plug into any data source, tool, or workflow without custom integrations for each one.
+> [!NOTE]
+> **TL;DR:**  
+> &nbsp;  
+> MCP is like USB-C for AI — a single, open standard that lets AI applications plug into any data source, tool, or workflow without custom integrations for each one.  
 
 ---
 
@@ -72,8 +74,8 @@ Think of it as a **common language** — a contract between AI models and the wo
 
 MCP is supported across a growing ecosystem including **Claude**, **ChatGPT**, **Visual Studio Code (Copilot)**, **Cursor**, and many more.
 
-> [!NOTE] Here's the one-liner:  
-> _MCP lets any AI model talk to any tool, using the same protocol, regardless of who built either of them._
+> [!NOTE]
+> **Here's the one-liner:**  _MCP lets any AI model talk to any tool, using the same protocol, regardless of who built either of them._
 
 ---
 
@@ -115,7 +117,9 @@ Claude / GPT / Gemini
 
 Suddenly you have a **spaghetti nightmare**. Every tool needs its own connector. Every new model you adopt breaks half your integrations. Your codebase is a museum of one-off hacks.
 
-> [!TIP] Sound familiar?
+> [!TIP]
+> **Sound familiar?**  
+> &nbsp;  
 > This was the reality for every AI developer before November 2024. See further down for a deep dive ([Before and After MCP: The Integration Explosion Problem](#before-and-after-mcp-the-integration-explosion-problem)).
 
 ---
@@ -174,7 +178,7 @@ This is known as the **"Integration Explosion problem"** (AKA the **M × N probl
 
 ### Before MCP:  M models × N tools = M×N integrations
 
-> [!NOTE] Example 1:
+> 💡 **Example 1:**
 
 ```
 Before MCP:  M models × N tools = M×N integrations
@@ -190,7 +194,7 @@ AI App B ──┬── Custom connector ── Database
 3 apps × 3 services = 9 custom integrations 😱
 ```
 
-> [!NOTE] Example 2:
+> 💡 **Example 2:**
 
 ```
 Before MCP:  M models × N tools = M×N integrations
@@ -211,7 +215,7 @@ Before MCP:  M models × N tools = M×N integrations
 
 With MCP, every app and every service speaks the **same protocol**:
 
-> [!NOTE] Example 1:
+> 💡 **Example 1:**
 
 ```
 After MCP:  M models + N servers = M+N implementations
@@ -226,7 +230,7 @@ AI Model C ──┘                 └── Calendar Server
   (Each model implements MCP once. Each tool server implements MCP once.)
 ```
 
-> [!NOTE] Example 2:
+> 💡 **Example 2:**
 
 ```
 After MCP:  M models + N servers = M+N implementations
@@ -273,7 +277,9 @@ MCP follows a **client-host-server architecture** with three key participants:
     └────────────┘  └────────────┘  └────────────┘
 ```
 
-> [!NOTE] Think of it this way:
+> [!NOTE]
+> **Think of it this way:**  
+> &nbsp;  
 > The Host is the *orchestra conductor*, Clients are the *communication lines*, and Servers are the *musicians* — each bringing their own instrument (capability) to the performance.
 
 ### Hosts
@@ -484,7 +490,8 @@ Below is a simplified but typical lifecycle of an MCP interaction:
 6. **Response generation** — the LLM incorporates the tool's output into its response
 7. **Result presentation** — the host displays the final response to the user
 
-> [!NOTE] EXAMPLE:
+> 💡 **EXAMPLE:**  
+> &nbsp;  
 > Let's trace exactly what happens when a user asks: **"What are the top-selling products in our database this month?"**
 
 ```
@@ -532,7 +539,9 @@ Below is a simplified but typical lifecycle of an MCP interaction:
    │                │                 │                 │                 │
 ```
 
-> [!NOTE] The beautiful part?
+> [!NOTE]
+> **The beautiful part?**  
+> &nbsp;  
 > **Steps 5–7 are standardised by MCP.** The AI model doesn't need to know if it's talking to PostgreSQL, MySQL, or MongoDB — it just calls a tool and gets back data in a consistent format.
 
 ---
@@ -572,7 +581,9 @@ MCP Host
 
 &nbsp;
 
-> [!NOTE] Use case:  
+> [!NOTE]
+> **Use case:**  
+> &nbsp;  
 > File system access, local database queries, dev tools  
 
 ### HTTP + SSE (Server-Sent Events)
@@ -613,7 +624,8 @@ MCP Client/Host
 
 &nbsp;
 
-> [!NOTE] Use case:
+> [!NOTE] **Use case:**  
+> &nbsp;  
 > Cloud APIs, SaaS integrations (Sentry, GitHub, Slack)
 
 ---
@@ -783,7 +795,9 @@ Here's the key distinction:
 └──────────────┴─────────────────┴────────────────┴─────────────┘
 ```
 
-> [!TIP] The key insight:
+> [!TIP]
+> **The key insight:**  
+> &nbsp;  
 > REST and GraphQL are designed for *human developers* writing code to call APIs. MCP is designed for *AI models* to discover and use capabilities **at runtime** without pre-written integrations.
 
 An MCP server tells the AI model: *"Here are the tools I have, here's what each one does, here's the schema for inputs and outputs."* The AI figures out when and how to use them dynamically.
@@ -871,7 +885,9 @@ public class CalculatorTools
 - The AI sees the description and knows this tool adds numbers
 - Clean, idiomatic C# — no boilerplate JSON schemas to write manually
 
-> [!IMPORTANT] Notice the pattern:
+> [!IMPORTANT]
+> **Notice the pattern:**  
+> &nbsp;  
 > Both examples follow the same structure — create a server, register tools with schemas, connect a transport. That's the beauty of a standardized protocol.
 
 ---
